@@ -2,7 +2,9 @@
 #
 #
 
-MGFDIR= rom0 #Use dirname with  rom0|rom1|rom2 
+#MGFDIR - use dirname with  rom0|rom1|rom2 
+MGFDIR=rom2
+
 
 AVRDUDE= avrdude -V -p m128 -c pony-stk200 -P lpt1
 PHP= php
@@ -24,16 +26,16 @@ monit1.asm:	games.php monit1.rom
 	$(PHP) -f games.php monit1
 
 pmd.asm: pmd.php 8080.asm kbd.php macro.asm video.php kb_lookup.asm games_rom.asm basic1.asm monit1.asm 
-	$(PHP) -q pmd.php > pmd.asm
+	$(PHP) -q pmd.php $(MGFDIR) > pmd.asm
 
 pmd.eep: pmd.hex
 
-pmd.hex: pmd.asm  
-	$(ASM) -fI pmd.asm -o pmd.hex -m pmd.map -e pmd.eep -l pmd.lst
+pmd_$(MGFDIR).hex: pmd.asm  
+	$(ASM) -fI pmd.asm -o pmd_$(MGFDIR).hex -m pmd.map -e pmd.eep -l pmd.lst
 
 
-flash:	pmd.hex
-	$(AVRDUDE) -U flash:w:pmd.hex
+flash:	pmd_$(MGFDIR).hex
+	$(AVRDUDE) -U flash:w:pmd_$(MGFDIR).hex
 
 eeprom:	pmd.eep
 	$(AVRDUDE) -U eeprom:w:pmd.eep

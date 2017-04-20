@@ -1,5 +1,5 @@
 
-AVRASM ver. 1.56  pmd.asm Sun Mar 12 15:40:37 2006
+AVRASM ver. 1.56  pmd.asm Wed Apr 23 21:06:38 2008
 
 
 EQU  ucsr1c       0000009d
@@ -1113,7 +1113,7 @@ CSEG mask_compute 00000c8a
 CSEG wr_kbd_pc    00000c96
 CSEG basic1_start 00000c9d
 CSEG games_start  00001e9d
-CSEG games_end    0000f331
+CSEG games_end    0000fd77
 DSEG stack_top    00000c00
 DSEG blink_lookup_table 00000c00
 DSEG parity_table 00000e00

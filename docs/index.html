@@ -18,8 +18,9 @@ i celkovou dostupnosou v školstve.
 <br>
 Cie¾om tejto konštrukcie je umoni nadšencom postavi si vlastnı klon PMDèka. To znamená vytvorenie zariadenia z ktorého po pripojení televízora, klávesnice a napájacieho zdroja sa prenesiete do rokov 80-tych a zahráte si napríklad ob¾úbeného MANIC MINERa alebo skúsite nieèo naprogramova v starom programovacom jazyku BASIC-G.   
 <br><br>
-Toto všetko vrátane cca 113 KB pôvodnıch hier a programov sa podarilo postupnımi iteráciami napokon vtesna iba do dvoch integrovanıch obvodov a to: ATmega128-16 a IO 64 KB pamäte RAM. Zobrazovanie obrazu na televízore (TV), generovanie zvuku, obsluha klávesnice ako aj vlastná emulácia chovania procesora Intel 8080, ktorı bol srdcom pôvodného PMD-85, je realizovaná èisto softvérovo. 
-<br><bR>
+Toto všetko vrátane cca 113 KB pôvodnıch hier a programov sa podarilo postupnımi iteráciami napokon vtesnat iba do dvoch integrovanıch obvodov a to: ATmega128-16 a IO 64 KB pamäte RAM. Zobrazovanie obrazu na televízore (TV), generovanie zvuku, obsluha klávesnice ako aj vlastná emulácia chovania procesora Intel 8080, ktorı bol srdcom pôvodného PMD-85, je realizovaná èisto softvérovo. 
+
+
 
 Samozrejme vdy je rozdiel medzi kópiou a originálom a inak to nebude ani v našom prípade. Niektoré nepodstatné vlastnosti pôvodného PMDèka boli zanedbané alebo vynechané, nieèo bolo implementované zjednodušene. Z poh¾adu softvéru, pôvodnıch programov na PMDèku, sa dosiahla kompatibilita takmer 100%, beia všetky známe programy vrátane vıbornej hry HLÍPY od Karla Šuhajdu. Generovanie èiernobieleho TV obrazu vrátane atribútov blikanie a jas je ve¾mi vıborné, náhrada magnetofónu pamäou FLASH na èítanie taktie vıborná, nehovoriac o nieko¾konásobnom zrıchlení nahrávania programov. Pôvodná klávesnica PMDèka ako jediné vstavané vstupné zariadenie je nahradená lacnou externou PS/2 klávesnicou. Najväèšie momentálne nedostatky v konštrukcií resp. obslunom softvéri sú pri generovaní zvukového vıstupu. 
 
@@ -27,10 +28,10 @@ Samozrejme vdy je rozdiel medzi kópiou a originálom a inak to nebude ani v našo
 <br><br>
 
 
-<b>PMD-85</b> bol domáci 8-bitovı mikropoèítaè so vstavanou klávesnicou a vıstupom na klasickı TV príjimaè. Vıstup na TV bol èiernobiely ale bola monos pripoji externı farebnı monitor s rozhraním RGB. Ale aj tak boli grafické monosti PMDèka malé - rozlíšenie 288&divide;256 pixelov, prièom kadá 6-tica mala spoloènı 2 bitovı grafickı atribút. Na vtedajšiu dobu to bol vıbornı obraz, keïe ZX Spectrum malo ešte nišie rozlíšenie 256&divide;192 + grafické atribúty. PMDèko bolo skonštruované a vyrábané niekdajšou Teslou Piešany okolo roku 1982. Neskôr ho v rôznych obmenách zaèalo vyrába viacero domácich vırobcov a vznikli modely PMD-85/2, PMD-85/2A, PMD-85/3, Didaktik Alfa 1,2, Didaktik Beta, Mao, Zbrojováèek C2717 a iné. PMDèko malo vstavanú svojsku nespo¾ahlivú klávesnicu, zvukovı vıstup - speaker, zasúvate¾nı ROM modul s BASIC-G. Ako pamä na uchovávanie programov slúil klasickı magnetofón.<br>
-Èo sa tıka softvéru - bola to éra tvorby softvéru nadšencami, vzniklo a bolo preportovanıch ve¾a hier. Ve¾mi èinné bolo trio autorov VBG software - Vlastimil Veselı, Libor Bedrlík a Ladislav Gavar. Na PMD-85 teda existuje par  megabajtov hier - Manic Miner, Flappy, Boulder Dash, Fred, Penetrator, Saboter, Pampuch, Wurmi, Galaxia, Mikrotron, Willy atï. Niektoré z nich (dá sa konfigurova) sú vstavané v tomto klone PMDèka (ktorı interne volám kódom <b>small_pmd_128</b>, 128=ve¾kos FLASH pamäte v KB, small=rozmery PMDèka 3x4 cm).
-<br><br>
 
+
+
+  
 
 
 
@@ -55,11 +56,11 @@ PMD sa skladalo z nasledovnıch hardvérovıch modulov:
 
 <P>Nebudeme rozobera pôvodné obvodové riešenie PMDèka, problematike  sú venované monografie dostupné v kniniciach. Uvedieme preto popis realizácie nášho klonu PMD-85/1. V krátkosti treba doda e verzie PMD-85/1, PMD-85/2, PMD-85/2A, PMD-85/3 boli navzájom èiastoène nekompatibilné a tie väèšina softvéru vznikla práve pre model PMD-85/1. 
 <br/>
-Treba tie doda e PMD-85/1 komunikovalo s magnetofónom prostredníctvom USART 8251, èo znamená registrovo orientovanı poh¾ad na komunikáciu s magnetofónom. Je podstatne jednoduhšie emulova prístup na magnetofónovú pásku po bajtoch s podporou handshake USART-u ako emulova èítanie z mgf. pásky cez jeden bit (v reálnom èase) - ako bolo realizované u vyšších modeloch PMD. Je však pravda e kvalita BASIC-u i firmware postupne u jednotlivıch modelov stúpala, ale ve¾a softvérového vybavenia vzniklo pre PMD-85/1. 
+Treba tie doda e PMD-85/1 komunikovalo s magnetofónom prostredníctvom USART 8251, èo znamená registrovo orientovanı poh¾ad na komunikáciu s magnetofónom. Je podstatne jednoduhšie emulova prístup na magnetofónovú pásku po bajtoch s podporou handshake USART-u ako emulova serializáciu dátového toku modulovaného 1200 Hz v reálnom èase - ako bolo realizované u vyšších modeloch PMD-85/2 a vyšších. Je však nesporné e kvalita BASIC-u i firmware postupne u jednotlivıch modelov stúpala, ale gro softvérového vybavenia vzniklo pre PMD-85/1. 
 </P>
 
 <p>
-Cie¾om konštrukcie je teda vyhotovenie zariadenia, z ktorého sa po pripojení napájacieho zdroja (AC-DC adaptéra), PS/2 klávesnice a klasického televízora so vstupom kompozitného videa/SCART stane plnohodnotné PMD-85/1. Navyše s virtuálnou magnetofónovou kazetou 113 KB hier medzi inımi MANIC MINER, BOULDER DASH, PENETRATOR, DUCH&amp;PAMPÚCH, HLÍPA, PAMPUCH, FLAPPY, WURMI èi SABOTER. 
+Cie¾om konštrukcie je teda vyhotovenie zariadenia, z ktorého sa po pripojení napájacieho zdroja (AC/DC adaptéra), PS/2 klávesnice a klasického televízora so vstupom kompozitného videa/SCART stane plnohodnotné PMD-85/1. Navyše s virtuálnou magnetofónovou kazetou 113 KB hier medzi inımi MANIC MINER, BOULDER DASH, PENETRATOR, DUCH&amp;PAMPÚCH, HLÍPA, PAMPUCH, FLAPPY, WURMI èi SABOTER. 
 
 </p>
 
@@ -235,14 +236,9 @@ Obrázok è.2
 <h2>Oivenie konštrukcie</h2>	
 <p>
 Po správnom osadení všetkıch súèiastok a konektorov vyskúšajte pripoji prúdovo obmedzenı zdroj napätia (napr. adaptér) cca 9-15 V jednosmernıch na napájací konektor. Na napájacích pinoch procesora skontrolujte prítomnos napájacieho napätia +5 V. Ak je napájanie procesora v poriadku, pripojte ISP programátor na zbernicu SPI a skontrolujte opä napätie, èi pripojenı programátor nemá ve¾kú spotrebu. Otestujte funkènos ISP SPI rozhrania napríklad preèítaním FLASH/EEPROM/fuse bitov z procesora.<br>
+
 Následne je moné prikroèi k nastaveniu poistiek (fuses) procesora a nahratiu obsahuje pamäte FLASH a EEPROM do procesora ATmega128. 
 </p>
-<img title="TOP view of our emulator PMD-85/1" src="pmd_emu_1.jpg" width="480" xstyle="float:right;margin-left:10px;margin-top:5px; margin-bottom:5px;">
-<br><b>Obrázok è.3 - poh¾ad na stranu súèiastok DPS. </b><br>
-
-<img title="top view of our emulator PMD-85/1" src="pmd_emu_2.jpg" width="480" xstyle="float:right;margin-left:10px;margin-top:5px; margin-bottom:5px;">
-<br><b>Obrázok è.4 - poh¾ad na stranu konektorov DPS. (CINCH - COMPOSITE_VIDEO, CINCH - SOUND_OUT, JACK - napájanie, PS/2 - klávesnica, SIP6 - ISP programátor)</b><br>
-
 
 
 <h2>Download programu z PC</h2>
@@ -501,39 +497,39 @@ Nasledovnı popis niektorıch hier PMD-85 pochádza z materiálov autora DOSovského 
 - Niektoré hry sú tzv. samospúšacie, t.j. po ukonèení nahrávania sa samé
 spustia. U tıch problémy nebıvajú. Niektoré sa však musia spusti explicitne,
 a to tak, e po ukonèení nahrávania sa napíše "JUMP xxxx", kde xxxx je
-hexadecim lne štvorèíslie, tzv. spúšacia adresa. Pri kadej hre je uvedené jej èíslo, názov, spúšacia adresa (ak má hra
+hexadecim lne štvorèíslie, tzv. spúšacia adresa. <br>
+- Pri kadej hre je uvedené jej èíslo, názov, spúšacia adresa (ak má hra
 autoštart, tak ????), ovládanie a krátky pokec.<br>
-<img src="manic1.bmp" style="clear:both;float:right; padding-left:10px; margin-top: 10px; ">
-<ul>
-<li>00, <b>AUTO</b>, 2000. Ve¾mi jednoduché riadenie auta, staèí prejs 5 kôl s
+<img src="manic1.bmp" style="float:right; padding-left:10px;">
+- 00, <b>AUTO</b>, 2000. Ve¾mi jednoduché riadenie auta, staèí prejs 5 kôl s
 najmenším poètom havárií. Kláves &lt;shift&gt; pohybuje do¾ava, &lt;V&gt; doprava.
 V cieli sa reštartuje shiftom. BTW, celá hra sa dá prejs bez jedinej havárie. Vieš, ako na to?<br>
-</li><li>10, <b>TEHLY</b>, 1500. Princíp je takı istı ako v Arkanoide, t.j. odráa gulièku
+- 10, <b>TEHLY</b>, 1500. Princíp je takı istı ako v Arkanoide, t.j. odráa gulièku
   pomocou vozíka. Ak gulièka odstráni a na tri kusy všetky tehly, ideš do
   ïalšieho levelu. Rıchlejšieho. Ak sa ti minú "ivoty", reštart je &lt;K0&gt;.<br>
-</li><li>03, <b>FRED</b>, ????. V smere stále doprava treba prejs asi 20 miestností.
+  - 03, <b>FRED</b>, ????. V smere stále doprava treba prejs asi 20 miestností.
   Ovládanie sa vypíše na zaèiatku po spustení. Ak poèas hry stlaèíš &lt;STOP&gt;,
   dostaneš dve monosti: S - START vráti za do prvej miestnosti, C - CONTINUE
   reštartuje aktuálnu miestnos.<br>
-</li><li>04, <b>HORACE</b>, ????. Na poschodí musíš predupa podlahu a èaka, e do nej
+- 04, <b>HORACE</b>, ????. Na poschodí musíš predupa podlahu a èaka, e do nej
   padne nejakı pavúk. Keï tam u je, treba ís za ním a skáka mu po tej
   sprostej hlave, a ho rozdupeš na ni. Ovládanie sa vypíše na zaèiatku po
   spustení.<br>
-</li><li>06, <b>MANIC</b>, ????. Najklasickejšia hra na PMD-85 vôbec. Ovládanie sa vypíše
+- 06, <b>MANIC</b>, ????. Najklasickejšia hra na PMD-85 vôbec. Ovládanie sa vypíše
   hneï v úvode, cie¾ hry následne po dohratí úvodnej melódie. V kadej
   miestnosti je nutné vyzbiera všetky predmety, pritom sa vyhıba príšerám a
   nakoniec sa vo vıahu vyvies do ïalšej miestnosti.<br>
-  
-</li><li>07, <b>PAMPUCH</b>, ????. — úlohou je riadi pampúcha tak, aby poral všetky dostupné
+  <img src="pampuch.bmp" style="float:right; padding-left:10px;">
+- 07, <b>PAMPUCH</b>, ????. — úlohou je riadi pampúcha tak, aby poral všetky dostupné
   bobky. Nesmie sa však dosta do kolízie s duchom. Ak vyerie celú miesnos,
   je nasadenı do ïalšej. Neriešite¾nú situáciu treba rieši klávesom &lt;STOP&gt;.
   Ovládanie je na zaèiatku, ibae do¾ava a doprava sa pohybuje rolovacími
   klávesmi, teda |&lt;- a -&gt;|.<br>
-</li><li>12, <b>ZABY</b>, 1500. Osem škaredıch iab èaká u len na to, e ich prevedieš na
+- 12, <b>ZABY</b>, 1500. Osem škaredıch iab èaká u len na to, e ich prevedieš na
   druhı breh. Okrem svojich pôvabov ti dávajú pod prsty aj nasledujúce klávesy:
   &lt;K9&gt; - aba vyskoèí na štartovú èiaru, &lt;K4&gt; - aba skoèí smerom k vytúenému
   cie¾u, &lt;K10&gt; - ukáe sa ti Tabu¾ka najlepších vıkonov, &lt;K11&gt; - reštart hry.<br>
-</li></ul><img src="pampuch.bmp" style="clear:both;float:right;margin-top: 10px; padding-left:10px;">
+
 <br>
 <b>Hry v programovacom jazyku BASIC G</b>, èie treba k nim interpreter tohto
 jazyka uloenı v ROM module. Po loadnutí interpretera do pamäti príkazom
@@ -542,24 +538,18 @@ jazyka uloenı v ROM module. Po loadnutí interpretera do pamäti príkazom
   ukonèení nahrávania sa sama nespustí. Preto je potrebné napísa príkaz "RUN".
 - Pri kadej hre je uvedené jej èíslo, názov a krátky pokec.<br><br>
 <br>
-
-<ul><li><b>BLACK</b>. Poèítaè a ty staviate cestu tak, aby ste sa dostali do opaèného
+- <b>BLACK</b>. Poèítaè a ty staviate cestu tak, aby ste sa dostali do opaèného
   rohu šachovnice. Kto príde prvı, vyhráva. Ovládanie je popísané priamo v hre.<br>
-</li><li>01, <b>BOMBARDER</b>. Si schopnı zrovna mesto so zemou? Uvidíme, ostatné sa dozvieš,
+ - 01, <b>BOMBARDER</b>. Si schopnı zrovna mesto so zemou? Uvidíme, ostatné sa dozvieš,
   keï spustíš hru.<br>
-  </li><li><b>FARAON</b>. V hrobke máš neporiadok. Ostatné sa dozvieš, keï spustíš hru.<br>
-  </li><li><b>KON</b>. Skoro ako BLACK, ibae tu sa ahá  koòom. Pravidlá  pre ah koòom sú
+  - <b>FARAON</b>. V hrobke máš neporiadok. Ostatné sa dozvieš, keï spustíš hru.<br>
+  - <b>KON</b>. Skoro ako BLACK, ibae tu sa ahá  koòom. Pravidlá  pre ah koòom sú
   ako v šachu.<br>
-</li><li><b>TAVA</b>. Hra s náhodou a prírodou. Ako dlho vydríš vies avu púšou?
+- <b>TAVA</b>. Hra s náhodou a prírodou. Ako dlho vydríš vies avu púšou?
   Ovládanie je ve¾mi jednoduché.<br>
-  </li><li><b>TEST LOG</b>. Staèí odpoveda na asi 20 otázok a dozvieš sa, ako si na tom.<br>
-  </li><li>11, <b>WURMI</b>. Klasika - treba ra kapustu, nie jed, ani seba a takisto stena
-  znamená problém.</li></ul>
-<img src="manic2.png" style="clear:both;float:right; padding-left:10px; margin-top: 10px; ">
-<img src="boulder.png" style="clear:both;float:right; padding-left:10px; margin-top: 10px; ">
-<img src="fred.png" style="clear:both;float:right; padding-left:10px; margin-top: 10px; ">
-<img src="zaby.png" style="clear:both;float:right; padding-left:10px; margin-top: 10px; ">
-<img src="penetrator.png" style="clear:both;float:right; padding-left:10px; margin-top: 10px; ">
+  - <b>TEST LOG</b>. Staèí odpoveda na asi 20 otázok a dozvieš sa, ako si na tom.<br>
+  - 11, <b>WURMI</b>. Klasika - treba ra kapustu, nie jed, ani seba a takisto stena
+  znamená problém.<br>
 
 <h2>Softvérové vybavenie ATmega128</h2>
 <p>Emulaènı softvér pre ATmega128 je napísanı v assembleri v kombinácií s preprocesorom - skriptovacím jazykom PHP. Na kompiláciu odporúèam ma nainštalované balíky <a href="http://winavr.sourceforge.net/">WINAVR</a>, AVRASSEMBLER a skriptovací jazyk <a href="http://www.php.net">PHP</a>. Prípadne rozdiely v inštalácií nastavte v súbore <b>code/Makefile</b>. Jednotlivé zdrojové súbory sú uloené po adresároch:  

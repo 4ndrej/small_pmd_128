@@ -192,7 +192,7 @@
 
 
 .dseg
-		.org	0x100	; skip ATmega128 MMIO (memory mapper I/O)
+		.org	0x100	; skip ATmega128 MMIO (memory mapped I/O)
 		
 kb_cols:	.byte   16  	; PMD's keyboard has 16 columns selected by IC 74154                                        '
 blink_counter:	.byte	1
@@ -214,7 +214,7 @@ stop_flag:	.byte	1
 		clr		_zero			; _zero := 0	
 		ldi		r30,255
 		mov		_255,r30
-
+		
 		; PORT E
  
 		; PE0 = KBD_DATA(RXD)(IN)
@@ -281,9 +281,9 @@ interrupt_OCR1A:
 	
 
 	in	video_tmp,TCNT1L		; synchronize with 1, 2 or 3 cycles interrupted instruction
-	cpi	video_tmp, 93	; 3 cycles instruction?
+	cpi	video_tmp, 141	; 3 cycles instruction?
 	breq	interrupted_1cycle
-	cpi	video_tmp, 92	; 2 cycles instruction?
+	cpi	video_tmp, 140	; 2 cycles instruction?
 	brne	interrupted_1cycle			; 1 cycle?
 
 interrupted_1cycle:	
@@ -1757,7 +1757,7 @@ switch_attributtes:
 		ret
 
 	
-text_info:	.db	"            P= PJ9P B  M= E.5E U  D= TM5T I  -= EA O L  8= RT0@ T  5=  U1K :  -= CS M    1= HKTI 1   = RUOT 2  E= E P. .  M= N2OS 3  U= K1LK .  L= O7C  2  A=  8A  0  T=  /N  0  O=  2Y  6  R=  1              1          5          :          4          0            "
+text_info:	.db	"            P= PJ9P B  M= E.5E U  D= TM5T I  -= EA O L  8= RT0@ T  5=  U1K :  -= CS M    1= HKTI 2   = RUOT 3  E= E P. .  M= N2OS 4  U= K1LK .  L= O7C  2  A=  8A  0  T=  /N  0  O=  2Y  8  R=  1              2          1          :          0          6            "
 
 	
 
@@ -2066,9 +2066,9 @@ calculate_new_byte_parity:
 				sts		OCR3AL,r30
 
 				
-				ldi		r30,high(83)	 ; when start video generation routine (T3/A)
+				ldi		r30,high(131)	 ; when start video generation routine (T3/A)
 				out		OCR1AH,r30
-				ldi		r30,low(83)	
+				ldi		r30,low(131)	
 				out		OCR1AL,r30
 				
 				mov		video_state,_zero		 ; video_state := 0
@@ -5281,118 +5281,6 @@ basic1_start:
 		.include	"basic1.asm"
 
 games_start:
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
-.dw 0xffff
 		.include	"games_rom.asm"
 games_end:
 		

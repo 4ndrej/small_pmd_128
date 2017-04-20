@@ -32,7 +32,8 @@
 	//$f      = 18432000;  	// external crystal (original PMD-85-1 screen size)
 	//$f      = 18000000;	// external crystal (optimal for most ATmega128)
  	$f      = 16000000;  	// external crystal - nominal for ATmega128-16AI
- 	//$f      = 8000000;  	// internal RC oscillator - FOR TESTS
+// 	$f      = 16934400;  	// external crystal - najdeny na starej CDROMke
+// 	$f      = 8000000;  	// internal RC oscillator - FOR TESTS
         
 	$memory_latency = 70e-9;  // 70 ns latency
 
@@ -54,7 +55,7 @@ function T($microsecond, $echo = true)
 
 }
 
-		 $tt1= 6;                // horizontal screen position (in microsecond)
+		 $tt1= 9;                // horizontal screen position (in microsecond)
 		                                     
 		 $ocr1 = T($tt1- 12/$f*1e6, false); // 12 cycles is approx. delayed when video generation routine is executed
 	
@@ -116,7 +117,7 @@ function T($microsecond, $echo = true)
 
 
 .dseg
-		.org	0x100	; skip ATmega128 MMIO (memory mapper I/O)
+		.org	0x100	; skip ATmega128 MMIO (memory mapped I/O)
 		
 kb_cols:	.byte   16  	; PMD's keyboard has 16 columns selected by IC 74154                                        '
 blink_counter:	.byte	1
@@ -138,7 +139,7 @@ stop_flag:	.byte	1
 		clr		_zero			; _zero := 0	
 		ldi		r30,255
 		mov		_255,r30
-
+		
 		; PORT E
  
 		; PE0 = KBD_DATA(RXD)(IN)
@@ -2005,7 +2006,7 @@ basic1_start:
 games_start:
 <?php 
    
-   $bad_flash_offset = 112; // compensation for BAD INTERNAL FLASH memory - set 0 for good ATmega device
+   $bad_flash_offset = 0; //112; // compensation for BAD INTERNAL FLASH memory - set 0 for good ATmega device
   
    for($i=0;$i<$bad_flash_offset; $i++)
    {

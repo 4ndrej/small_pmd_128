@@ -32,7 +32,8 @@
 	//$f      = 18432000;  	// external crystal (original PMD-85-1 screen size)
 	//$f      = 18000000;	// external crystal (optimal for most ATmega128)
  	$f      = 16000000;  	// external crystal - nominal for ATmega128-16AI
- 	//$f      = 8000000;  	// internal RC oscillator - FOR TESTS
+ 	$f      = 16934400;  	// external crystal - najdeny na starej CDROMke
+// 	$f      = 8000000;  	// internal RC oscillator - FOR TESTS
         
 	$memory_latency = 70e-9;  // 70 ns latency
 
@@ -116,7 +117,7 @@ function T($microsecond, $echo = true)
 
 
 .dseg
-		.org	0x100	; skip ATmega128 MMIO (memory mapper I/O)
+		.org	0x100	; skip ATmega128 MMIO (memory mapped I/O)
 		
 kb_cols:	.byte   16  	; PMD's keyboard has 16 columns selected by IC 74154                                        '
 blink_counter:	.byte	1
@@ -138,7 +139,7 @@ stop_flag:	.byte	1
 		clr		_zero			; _zero := 0	
 		ldi		r30,255
 		mov		_255,r30
-
+		
 		; PORT E
  
 		; PE0 = KBD_DATA(RXD)(IN)
@@ -334,7 +335,7 @@ pop_a_cycle:
 
 			; download ROM firmware (PMD-85 monitor) to SRAM location 0x8000 - 0x8ffff 	
 			
-			.equ	monitor_start	=	0x8000
+			.equ	monitor_start	=	0x6000
 			.equ	monitor_go	=	0x8000
 			.equ	monitor_length  =       0x1000
 			
@@ -404,7 +405,7 @@ kb_inic:			st		Z+,YH				; 16 keyboard cols set to 0x1f
 				ldi		_PCH,high(monitor_go)  		; after RESET 
 				ldi		PSW,0x80			; I = 1, we must have enabled interrupts
 
-
+				rjmp		PC
 _nop:			
 _none:
 _ei: 
@@ -2005,7 +2006,7 @@ basic1_start:
 games_start:
 <?php 
    
-   $bad_flash_offset = 112; // compensation for BAD INTERNAL FLASH memory - set 0 for good ATmega device
+   $bad_flash_offset = 0; //112; // compensation for BAD INTERNAL FLASH memory - set 0 for good ATmega device
   
    for($i=0;$i<$bad_flash_offset; $i++)
    {
@@ -2013,7 +2014,7 @@ games_start:
    }
 
 ?>
-		.include	"games_rom0.asm"
+	;	.include	"games_rom.asm"
 games_end:
 		
 
