@@ -2,7 +2,7 @@
 
 small_pmd_128 is Peter Chrenko's hardware emulator of PMD85-1 (8-bit I8080 computer from 1985) using ATmega128
 
-This is git version of zip archives from http://pmd85.topindex.sk/download/ URL.
+This is git version of zip archives from http://pmd85.topindex.sk/download/ URL. It is great because of change tracking and also space conservation (original zips: 19MiB, git repo: 8.40 MiB)
 
 More info at Peter Chrenko's http://pmd85.topindex.sk/
 
