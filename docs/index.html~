@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Urob si sám PMD-85-1</TITLE>
+<META content="text/html; charset=windows-1250" http-equiv=Content-Type>
+</HEAD>
+
+<BODY>
+	
+<B>Autor:</B> Ing. Peter Chrenko, Janka Matušku 2178/21, 955 01 Topoľčany, 
+Slovensko <BR><B>Kontakt:</B> <A href="mailto:peto@kmit.sk">peto@kmit.sk</A>, <A 
+href="http://www.kmit.sk/~peto">http://www.kmit.sk/~peto</A>, ICQ: 
+177600338<BR><BR>
+<H1>Urob si sám PMD-85</H1>
+<P>PMD-85 bol slávny osembitový mikropočítač hojne používaný v
+Československu v rokoch 1984-1994. Rozšírený bol hlavne cez krúžky tedajšieho ZVAZARMu, domov pionierov a mládeže
+i celkovou dostupnosťou v školstve. 
+
+<br>
+Cieľom tejto konštrukcie je umožniť nadšencom postaviť si vlastný klon PMDčka. To znamená vytvorenie zariadenia z ktorého po pripojení televízora, klávesnice a zdroja sa prenesiete do rokov 80tych a zahráte si napríklad obľúbeného MANIC MINERa alebo skúsite niečo naprogramovať v starom programovacom jazyku BASIC-G.   
+<br><br>
+Toto všetko vrátane cca 120 KB pôvodných hier a programov sa podarilo postupnými iteráciami napokon vtesnat iba do dvoch integrovaných obvodov a to: ATmega128-16 a IO 64 KB pamäte RAM. Zobrazovanie obrazu na televízore (TV), generovanie zvuku, obsluha klávesnice ako aj vlastná emulácia chovania procesora Intel 8080, ktorý bol srdcom pôvodného PMD-85, je realizovaná čisto softvérovo. 
+
+
+Samozrejme vždy je rozdiel medzi kópiou a originálom a inak to nebude ani v našom prípade. Niektoré nepodstatné vlastnosti pôvodného PMDčka boli zanedbané alebo vynechané, niečo bolo implementované zjednodušene. Z pohľadu softvéru, pôvodných programov na PMDčku, sa dosiahla kompatibilita takmer 100%, bežia všetky známe programy vrátane výbornej hry HLÍPY od Karla Šuhajdu. Generovanie čiernobieleho TV obrazu vrátane atribútov blikanie a jas je veľmi výborné, náhrada magnetofónu pamäťou FLASH na čítanie taktiež výborná, nehovoriac o niekoľkonásobnom zrýchlení nahrávania programov. Pôvodná klávesnica PMDčka ako jediné vstavané vstupné zariadenie je nahradená lacnou externou PS/2 klávesnicou. Najväčšie momentálne nedostatky v konštrukcií resp. obslužnom softvéri sú pri generovaní zvukového výstupu. 
+
+
+<br><br>
+
+
+
+
+
+  
+
+
+
+</P>
+
+<P><B>Pôvodné PMD-85</B> bol mikropočítač postavený z v tej dobe populárnej procerosovej rodiny Intel 8080 (MHB 8080). Jednalo sa o obvody 8080 - procesor, 8228 - radič zbernice, 8224 - hodinový generátor, 3x8255 - paralelné rozhranie, 8251 - sériové rozhranie apod.  Typickým pre systémy z 80 rokov bolo použitie aj obvodov s malou hustotou integrácie - TTL logiky. U PMD bol technológiou TTL obvodov zostavený kompletný videoprocesor, starajúci sa o cyklické zobrazovanie videopamäte na pripojenom televízore. </p>
+<p>
+PMD sa skladalo z nasledovných hardvérových modulov:
+
+<UL>
+	<li>procesorový modul</li>	
+	<LI>videoprocesor </li>
+	<LI>modul interfejsov </li>
+	<LI>klávesnica</li>
+	<LI>ROM modul (BASIC-G) </LI>
+</UL>
+</p>
+
+
+
+<P>Nebudeme rozoberať pôvodné obvodové riešenie PMDčka, problematike  sú venované monografie dostupné v knižniciach. Uvedieme preto popis realizácie nášho klonu PMD-85/1. V krátkosti treba dodať že verzie PMD-85/1, PMD-85/2, PMD-85/2A, PMD-85/3 boli navzájom čiastočne nekompatibilné a tiež väčšina softvéru vznikla práve pre model PMD-85/1. 
+<br/>
+Treba tiež dodať že PMD-85/1 komunikovalo s magnetofónom prostredníctvom USART obvodu, čo znamená podstatne jednoduhší model komunikácie s magnetofónom ktorý je podstatne jednoduhší na emuláciu ako emulovať serializáciu dátového toku modulovaného 1200 Hz u vyšších modeloch PMD. Je však nesporné že kvalita BASIC-u i firmware postupne u jednotlivých modelov stúpala. 
+</P>
+
+<p>
+Cieľom konštrukcie je teda vyhotovenie zariadenia, z ktorého sa po pripojení zdroja (AC/DC adaptéra z východnej Ázie), PS/2 klávesnice a klasického televízora so vstupom kompozitného videa/SCART stane plnohodnotné PMD-85/1. Navyše s virtuálnou magnetofónovou kazetou 120 KB hier medzi inými MANIC MINER, BOULDER DASH, PENETRATOR, DUCH&amp;PAMPÚCH, HLÍPA, PAMPUCH, FLAPPY, WURMI či SABOTER. 
+
+</p>
+
+
+
+<P><div><img src="schema.png" alt="Obr. 1"/><br/>Obr. č.1 </div><br/>
+
+Na obrázku 1 je znázornená obvodová schéma. Komunikácia s užívateľom sa realizuje prostredníctvom externej klávesnice a televízneho prijímača. 
+Jeden z kľúčových prvkov konštrukcie je zvládnutie generovania úplného televízneho signálu v rozlíšení 288x256 pixelov, pričom každá šestica pixelov má dvojbitový grafický atribút, presne tak ako pôvodné PMD-85/1. 
+</P>
+
+
+<H2>VIDEO D/A prevodník</H2>
+<p>
+Generovanie kompozitného videa signálu <b>COMPOSITE_VIDEO</b> realizuje asymetrický D/A prevodník realizovaný odporovou sieťou R1, R3 a R4, ktorá mixuje TTL videodáta VIDEO_DATA a 
+synchronizačnú zmes SYNC do štandardného videosignálu cca 1 V<sub>šš</sub>. Signál COMPOSITE_VIDEO je vyvedený na CINCH konektor VO0. Vopred upozorňujem že na jednovrstvojej doske plošného spoja <b>je nutné prepojiť prepojkou PAD1 s COMPOSITE_VIDEO</b>. Obvod jasového atribútu, zloženého z diód D1, D2 a odporu R2 realizuje zvýšenie jasu zobrazovaného pixelu v prípade rovnakej hodnoty signálov BRIGHT=1 a VIDEO_DATA=1.
+<br/><br/>
+<div>
+<table border="1" align="center">
+	<tr>
+		<th>VIDEO_DATA</th><th>BRIGHT</th><th>SYNC</th><th>COMPOSITE_VIDEO [V]</th>
+	</tr>
+        <tr>
+		<td>L</td><td>X</td><td>L</td><td>0 (synchro úroveň)</td>	
+	</tr>
+        <tr>
+		<td>L</td><td>X</td><td>H</td><td>0.7 (úroveň čiernej)</td>	
+	</tr>
+        <tr>
+		<td>H</td><td>L</td><td>H</td><td>1.0 (50% jas)</td>	
+	</tr>
+        <tr>
+		<td>H</td><td>H</td><td>H</td><td>1.4 (100% jas = biela)</td>	
+	</tr>
+</table>
+<br/>
+Tabuľka č.1.
+</div>
+<br/><br/>
+Napäťové úrovne COMPOSITE_VIDEO sú veľké približne podľa tabuľky č.1, kde symboly logických úrovní H, L a X majú obvyklý význam. Z tabuľky je zrejmé že úrovne výstupného kompozitného signálu nie sú exaktne podľa odporúčaní TV normy, ale neuberá to na funkčnosti zapojenia či ostrosti generovaného obrazu.  
+</p>
+
+<h2>PAMÄŤOVÝ PODSYSTÉM</h2>
+<p>
+K procesoru ATmega128 (IC1) je pripojená 128 (alebo 64) KB SRAM v púzdre SOJ IC2, z ktorej sa momentálne využíva iba prvých 64 KB. 
+
+Pamäť je adresovaná 17 bitovou adresnou zbernicou, vytvorenou z portov monolitického mikropočítača ATmega128 tak, aby procesor mohol v priebehu 2 taktov vyslať 16 bitovú časť adresy inštrukciou OUT. 16-tym adresným bitom sa prepína medzi dvoma 64 KB bankami pamäte a bežne sa nezúčastňuje adresnej aritmetiky. Podľa schémy na obrázku č.1 vidíme že adresné bity 0. až 15. sú porozhadzované po portoch PB a PD na prvý pohľad nezmyselne, ale tak aby na jednovrstvovom plošnom spoji nevzniklo kríženie vodičov. Dátová obojsmerná zbernica je riešená použitím celého 8 bitového portu PC. Signály čítania /RD a zápisu /WR sú generované 2 bitmi portu PA. 
+
+Pamäť je trvalo selektovaná signálmi /E1.E2 = 1.  
+</p>
+<p>
+
+Vnútornú pamäť ATmega128 typu FLASH využívame jednak na uloženie softvéru simulujúcim správanie PMDčka (cca 8 KB) a programov pre PMD-85 (cca 120 KB) simulujúcou magnetofón a ROM modul s programom BASIC-G/V1. Táto časť programového vybavenia je uložená v kompresovanom RLE tvare. Vnútorná 4 KB EEPROM procesora ATmega128 je taktiež využitá do posledného bajtu na uloženie 4 KB ROM firmware PMDčka.   
+
+</p><p>
+
+Takéto riešenie pripojenia externej pamäte RAM umožňuje zvýšiť priepustnosť pamäťového podsystému oproti štandardne používanemu zapojeniu z manuálu s použitím záchytného registra. ATmega128 bohužial nepodporuje lineárny pamäťový priestor externej RAM plných 64 KB, nakoľko vnútorná RAM a registre sú adresované tými istými inštrukciami ako externá pamäť. Na emuláciu správania PMDčka je potrebných lineárnych 64 KB priestoru RAM, ktoré sú využívané nasledovne:  
+
+<table border="1" align="center">
+	<tr><td>0x0000 &divide; 0x7FFF</td><td> 32 KB RAM 	</td></tr>
+	<tr><td>0x8000 &divide; 0x8FFF</td><td> 4 KB ROM firmware</td></tr>
+	<tr><td>0x9000 &divide; 0xBFFF</td><td> 12 KB neobsadené </td></tr>
+	<tr><td>0xC000 &divide; 0xFFFF</td><td> 16 KB VIDEORAM </td></tr>
+</table>
+
+</p>
+
+<h2>VIDEOPROCESOR</h2>
+<p>
+Videoprocesor periodicky číta obsah videopamäte a zaisťuje generovanie TV signálu cez VIDEO D/A prevodník. 
+Táto činnosť zaberá použitému mikroprocesoru ATmega128 približne 3/4 strojového času. Zvyšná 1/4 výkonu postačuje na simuláciu chovania procesora 8080, použitom v originálnom PMD-85. Pozrime sa podrobnejšie ako a z čoho sa generuje videosignál. 
+</p>
+<p>
+Videopamäť je 16 KB veľká pamäť RAM organizovaná do 256 riadkov po 64 bajtoch. Jeden riadok obsahuje 48 "viditeľných" bajtov a 16 bajtov ktoré sú zatemnené. Jeden bajt je podľa nasledovnej tabuľky organizovaný tak že nesie informáciu o 6 pixeloch a k nim prislúchajúci 2 bitový atribút:
+<br/><br/>
+<table border="1" align="center">
+	<tr><th>D7</th><th>D6</th><th>D5</th><th>D4</th><th>D3</th><th>D2</th><th>D1</th><th>D0</th></tr>
+	<tr><td>BLINK</td><td>BRIGHTNESS</td><td>P0</td><td>P1</td><td>P2</td><td>P3</td><td>P4</td><td>P5</td></tr>
+</table>
+<br/>
+Zaujímavé je reverzné poradie pixelov P0 až P5, t.j. pixel vľavo má nižšiu bitovú váhu ako pixel ležiaci vpravo od neho v rámci každej šestice pixelov. Takto organizovaný pamäťový priestor videopamäte umožňuje zobraziť obraz v rozlíšení 288 &times; 256 pixelov. Každá horizontálna šestica pixelov môže byť zobrazená navyše v 4-och módoch:
+<br/><br/>
+
+<table border="1" align="center">
+	<tr><th>BLINK</td><th>BRIGHTNESS</th><th>zobrazenie</th></tr>
+	<tr><td>L</td><td>L</td><td>normálne</td></tr>
+	<tr><td>L</td><td>H</td><td>zvýšený jas</td></tr>
+	<tr><td>H</td><td>L</td><td>normálne + blikanie 1 Hz</td></tr>
+	<tr><td>H</td><td>H</td><td>zvýšený jas + blikanie 1 Hz</td></tr>
+</table>
+
+
+
+
+</p>
+<p>
+Najpracnejšou úlohou videoprocesora je serializácia jedného TV mikroriadku, t.j. rozklad 48 bajtov do 288 pixelov spolu s grafickými atribútmi v reálnom čase. To vyžaduje spracovať 48 bajtov počas 48 us, teda zvládnuť konverziu 8 Mb/s dát do 6 Mpx/s (megapixelov za sekundu). To znamená pre každý bajt vyslať adresu na adresnú zbernicu, prečítať ho, vyslať postupne 6 po sebe idúcich pixelov, inkrementovať ukazovateľe .... Pri použití procesora ATmega128 taktovaného na 18 MHz by sme museli jeden pixel vygenerovať za 3 periódy hodín. Keďže bežne dostupný je procesor bežiaci na 16 MHz, bolo nutné urobiť kompromis a generovať nerovnako široké pixely podľa tabuľky:
+
+<br/><br/>
+<table border="1" align="center">
+	<tr><td>P0</td><td>P1</td><td>P2</td><td>P3</td><td>P4</td><td>P5</td><th>= 6 pixelov</th></tr>
+	<tr><td>3 clk</td><td>2 clk</td><td>3 clk</td><td>3 clk</td><td>2 clk</td><td>3 clk</td><th align="left">= 16 clk@16 MHz</th></tr>
+</table>
+<br/>
+Dva pixely z každej šestice sú skrátené na 2/3 šírky normálneho pixelu aby 6 pixelov bolo vygenerovaných za 16 periód hodín, t.j. za 1 us. Pri takte 18 MHz sú pixely (po rekompilácií programu) rovnako široké. 
+
+<br/><br/>
+<table border="1" align="center">
+	<tr><td>P0</td><td>P1</td><td>P2</td><td>P3</td><td>P4</td><td>P5</td><th>= 6 pixelov</th></tr>
+	<tr><td>3 clk</td><td>3 clk</td><td>3 clk</td><td>3 clk</td><td>3 clk</td><td>3 clk</td><th align="left">= 18 clk@18 MHz</th></tr>
+</table>
+<br/>
+
+
+Serializácia videodát spolu s grafickými atribútmi je možná vďaka špeciálnemu rozloženiu signálov VIDEO_DATA a BRIGHT na porte PORTE, ktoré umožňuje využiť inštrukciu aritmetického posuvu vpravo (ASR). Blikací atribút BLINK je realizovaný čisto softvérovo.
+
+</p>
+<h3>Generovanie synchronizačných signálov</h3>
+<p>
+Na vytvorenie úplneho kompozitného videa potrebujeme okrem modulačného signálu VIDEO_DATA taktiež synchronizačný signál SYNC. Horizontálny synchronizačný signál s opakovacou frekvenciou 15625 Hz a šírkou impulzu 4.7 us negatívnej polarity je realizovaný PWM modulátorom vyvedenom na pine OC3A. Polohu horizontálneho synchronizačného impulzu je možné nastaviť takmer ľubovoľne vzhľadom na začiatok generovania TV mikroriadku. V súčasnej verzii sa 6 us po horizontálnom synchronizačnom impulze sa začína kresliť prvý pixel daného mikroriadku. Za jednu sekundu sa teda zobrazí 15625 mikroriadkov čo tvorí 312 mikroriadkov s opakovacou frekvenciou 50.08 Hz. Je zvolené neprekladané riadkovanie, t.j. susedný párny aj nepárny snímok sú totožné. (Klasická TV norma uvažuje o 625 TV riadkoch, ktoré sa prenášajú s opakovacou frekvenciou 25 Hz systémom: najprv párny snímok tvorený 312.5 riadkami a potom nepárny snímok 312.5 riadkov. 312.5 riadkové snímky sa teda prenášajú frekvenciou 50 Hz.)
+</p>
+
+<p>
+Z  celkového počtu 312 mikroriadkov sa aktívne zobrazuje 256 riadkov. Zvyšné mikroriadky slúžia sú nepoužité alebo slúžia na prenos snímkových (vertikálnych) synchronizačných impulzov. Vertikálny synchronizačný impulz tvorí 5 TV mikroriadkov tvorených s predĺženým horizontálnym synchronizačným impulzom na 32 us. Poloha - vertikálne a horizontálne posunutie obrazu je možné zmeniť v programe zmenením práve posunutia synchronizácie. Jedná sa o zjednodušené implementovanie TV normy. Konštrukcia bola overená na televízoroch: CTV 2134A.
+</p>
+
+<h2>EMULÁCIA PROCESORA 8080</h2>
+
+<p>
+Keďže ATmega128 je vyťažená generovaním videosignálu, vygenerovanie každého TV mikrotriadku trvá cca 50 us zo 64 us. Zvyšný čas spätného chodu lúča cca 12 us je využitý práve na emuláciu správania procesora Intel 8080 a ostaných obvodov PMDčka. 
+</p>
+
+
+<h2>Download programu z PC</h2>
+<p>
+Na nahratie (upload) emulačného programu do pamäte FLASH procesora Atmega128 využívame rozhranie SPI vyvedené na konektore JP1 (ISP). Pretože niektoré signály rozhrania sú používané aj rozhraním ku PS/2 klávesnici je bezpodmienečne nutné pred uploadom ju odpojiť, pretože klávesnica by prenos rušila. Počas uploadu môžeme na pripojenom TV sledovať horizontálne čiary, indikujúce prebiehajúci prenos.
+</p>
+
+</BODY>
+
+
+
+</HTML>
+

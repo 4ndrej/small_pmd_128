@@ -1,0 +1,22 @@
+EAGLE Version 4.11 Copyright (c) 1988-2003 CadSoft
+
+Electrical Rule Check for C:/mega/small_pmd_128/schema/schema128.sch at 13.07.2004 22:21:31 
+
+ERROR: Sheet 1/1: unconnected INPUT Pin: IC1 PF0(ADC0)
+ERROR: Sheet 1/1: unconnected INPUT Pin: IC1 PF1(ADC1)
+ERROR: Sheet 1/1: unconnected INPUT Pin: IC1 PF2(ADC2)
+ERROR: Sheet 1/1: unconnected INPUT Pin: IC1 PF4(ADC4/TCK)
+ERROR: Sheet 1/1: unconnected INPUT Pin: IC1 PF5(ADC5/TMS)
+ERROR: Sheet 1/1: unconnected INPUT Pin: IC1 PF6(ADC6/TDO)
+ERROR: Sheet 1/1: unconnected INPUT Pin: IC1 PF7(ADC7/TDI)
+WARNING: Sheet 1/1: POWER Pin IC1 VCC1 connected to VCC
+WARNING: Sheet 1/1: POWER Pin IC1 GND1 connected to GND
+ERROR: Sheet 1/1: unconnected INPUT Pin: IC1 PEN
+WARNING: Only 1 Pin on net PA0
+WARNING: Only 1 Pin on net PA1
+WARNING: Only 1 Pin on net PA2
+
+Board and schematic are consistent
+
+    8 errors
+    5 warnings

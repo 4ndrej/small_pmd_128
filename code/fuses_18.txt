@@ -1,0 +1,25 @@
+PROGRAMMED FUSES (to run at 18.432, 18.000 or 16.000 MHz external crystal):
+PROGRAMMED = 0 (checked - ponyprog)
+
+EESAVE = 0 
+BOOTSZ1 = 0
+BOOTSZ0 = 0
+SPIEN = 0
+
+CKOPT = 0
+
+CKSEL3 = 1 
+CKSEL2 = 1 
+CKSEL1 = 1 
+CKSEL0 = 0
+
+other bits set as unprogrammed (as 1)
+
+------------------------------------------------------
+to program at 8 MHz internal RC oscillator change:
+CKSEL3 = 0 (invert)
+CKSEL2 = 1 (invert)
+CKSEL1 = 0 (invert)
+CKSEL0 = 0 (invert)
+-----------------------------------------------------
+
