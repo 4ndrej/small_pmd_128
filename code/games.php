@@ -80,10 +80,11 @@ function last_char( $c ) // zabezpeci pakovanie rovnakych sekvencii > 254 znakov
 
   
   $games_dir = $_SERVER['argv'][1];
+  $oname = $_SERVER['argv'][2] ? $_SERVER['argv'][2] : "${games_dir}.asm";
   if( ! preg_match("/rom\\d+/",$games_dir))
   {
      $rom = file_get_contents("$games_dir.rom");
-     $output = fopen("${games_dir}.asm", "wt");
+     $output = fopen($oname, "wt");
      rom_modul($output, $rom, $games_dir);
      fclose($output);
 	
@@ -114,7 +115,7 @@ function last_char( $c ) // zabezpeci pakovanie rovnakych sekvencii > 254 znakov
   $files[1] = $tmp;
   */
 
-  $output = fopen("games_${games_dir}.asm", "wb");
+  $output = fopen($oname, "wb");
   $from = 0; // hexa counter 
   
   

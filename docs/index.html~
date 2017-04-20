@@ -13,11 +13,13 @@ href="http://www.kmit.sk/~peto">http://www.kmit.sk/~peto</A>, ICQ:
 <P>PMD-85 bol slávny osembitovı mikropoèítaè hojne pouívanı v
 Èeskoslovensku v rokoch 1984-1994. Rozšírenı bol hlavne cez krúky tedajšieho ZVAZARMu, domov pionierov a mládee
 i celkovou dostupnosou v školstve. 
+<img src="Pemdie.jpg" style="float:right;margin-left:10px;margin-top:5px; margin-bottom:5px;">
 
 <br>
-Cie¾om tejto konštrukcie je umoni nadšencom postavi si vlastnı klon PMDèka. To znamená vytvorenie zariadenia z ktorého po pripojení televízora, klávesnice a zdroja sa prenesiete do rokov 80tych a zahráte si napríklad ob¾úbeného MANIC MINERa alebo skúsite nieèo naprogramova v starom programovacom jazyku BASIC-G.   
+Cie¾om tejto konštrukcie je umoni nadšencom postavi si vlastnı klon PMDèka. To znamená vytvorenie zariadenia z ktorého po pripojení televízora, klávesnice a napájacieho zdroja sa prenesiete do rokov 80-tych a zahráte si napríklad ob¾úbeného MANIC MINERa alebo skúsite nieèo naprogramova v starom programovacom jazyku BASIC-G.   
 <br><br>
-Toto všetko vrátane cca 120 KB pôvodnıch hier a programov sa podarilo postupnımi iteráciami napokon vtesnat iba do dvoch integrovanıch obvodov a to: ATmega128-16 a IO 64 KB pamäte RAM. Zobrazovanie obrazu na televízore (TV), generovanie zvuku, obsluha klávesnice ako aj vlastná emulácia chovania procesora Intel 8080, ktorı bol srdcom pôvodného PMD-85, je realizovaná èisto softvérovo. 
+Toto všetko vrátane cca 113 KB pôvodnıch hier a programov sa podarilo postupnımi iteráciami napokon vtesnat iba do dvoch integrovanıch obvodov a to: ATmega128-16 a IO 64 KB pamäte RAM. Zobrazovanie obrazu na televízore (TV), generovanie zvuku, obsluha klávesnice ako aj vlastná emulácia chovania procesora Intel 8080, ktorı bol srdcom pôvodného PMD-85, je realizovaná èisto softvérovo. 
+
 
 
 Samozrejme vdy je rozdiel medzi kópiou a originálom a inak to nebude ani v našom prípade. Niektoré nepodstatné vlastnosti pôvodného PMDèka boli zanedbané alebo vynechané, nieèo bolo implementované zjednodušene. Z poh¾adu softvéru, pôvodnıch programov na PMDèku, sa dosiahla kompatibilita takmer 100%, beia všetky známe programy vrátane vıbornej hry HLÍPY od Karla Šuhajdu. Generovanie èiernobieleho TV obrazu vrátane atribútov blikanie a jas je ve¾mi vıborné, náhrada magnetofónu pamäou FLASH na èítanie taktie vıborná, nehovoriac o nieko¾konásobnom zrıchlení nahrávania programov. Pôvodná klávesnica PMDèka ako jediné vstavané vstupné zariadenie je nahradená lacnou externou PS/2 klávesnicou. Najväèšie momentálne nedostatky v konštrukcií resp. obslunom softvéri sú pri generovaní zvukového vıstupu. 
@@ -35,9 +37,11 @@ Samozrejme vdy je rozdiel medzi kópiou a originálom a inak to nebude ani v našo
 
 </P>
 
-<P><B>Pôvodné PMD-85</B> bol mikropoèítaè postavenı z v tej dobe populárnej procerosovej rodiny Intel 8080 (MHB 8080). Jednalo sa o obvody 8080 - procesor, 8228 - radiè zbernice, 8224 - hodinovı generátor, 3x8255 - paralelné rozhranie, 8251 - sériové rozhranie apod.  Typickım pre systémy z 80 rokov bolo pouitie aj obvodov s malou hustotou integrácie - TTL logiky. U PMD bol technológiou TTL obvodov zostavenı kompletnı videoprocesor, starajúci sa o cyklické zobrazovanie videopamäte na pripojenom televízore. </p>
+<P><B>Pôvodné PMD-85</B> bol mikropoèítaè postavenı z v tej dobe populárnej procerosovej rodiny Intel 8080 (MHB 8080). Jednalo sa o obvody: 8080 - procesor, 8228 - radiè zbernice, 8224 - hodinovı generátor, 3x8255 - paralelné rozhranie, 8251 - sériové rozhranie apod.  Typickım pre systémy z 80-tych rokov bolo pouitie aj obvodov s malou hustotou integrácie - TTL logiky. U PMD bol technológiou TTL obvodov zostavenı kompletnı videoprocesor, starajúci sa o cyklické zobrazovanie videopamäte na pripojenom televízore. </p>
 <p>
 PMD sa skladalo z nasledovnıch hardvérovıch modulov:
+
+<img src="tesla_gp.jpg" style="float:right;margin-left:10px;margin-top:5px; margin-bottom:5px;">
 
 <UL>
 	<li>procesorovı modul</li>	
@@ -52,11 +56,11 @@ PMD sa skladalo z nasledovnıch hardvérovıch modulov:
 
 <P>Nebudeme rozobera pôvodné obvodové riešenie PMDèka, problematike  sú venované monografie dostupné v kniniciach. Uvedieme preto popis realizácie nášho klonu PMD-85/1. V krátkosti treba doda e verzie PMD-85/1, PMD-85/2, PMD-85/2A, PMD-85/3 boli navzájom èiastoène nekompatibilné a tie väèšina softvéru vznikla práve pre model PMD-85/1. 
 <br/>
-Treba tie doda e PMD-85/1 komunikovalo s magnetofónom prostredníctvom USART obvodu, èo znamená podstatne jednoduhší model komunikácie s magnetofónom ktorı je podstatne jednoduhší na emuláciu ako emulova serializáciu dátového toku modulovaného 1200 Hz u vyšších modeloch PMD. Je však nesporné e kvalita BASIC-u i firmware postupne u jednotlivıch modelov stúpala. 
+Treba tie doda e PMD-85/1 komunikovalo s magnetofónom prostredníctvom USART 8251, èo znamená registrovo orientovanı poh¾ad na komunikáciu s magnetofónom. Je podstatne jednoduhšie emulova prístup na magnetofónovú pásku po bajtoch s podporou handshake USART-u ako emulova serializáciu dátového toku modulovaného 1200 Hz v reálnom èase - ako bolo realizované u vyšších modeloch PMD-85/2 a vyšších. Je však nesporné e kvalita BASIC-u i firmware postupne u jednotlivıch modelov stúpala, ale gro softvérového vybavenia vzniklo pre PMD-85/1. 
 </P>
 
 <p>
-Cie¾om konštrukcie je teda vyhotovenie zariadenia, z ktorého sa po pripojení zdroja (AC/DC adaptéra z vıchodnej Ázie), PS/2 klávesnice a klasického televízora so vstupom kompozitného videa/SCART stane plnohodnotné PMD-85/1. Navyše s virtuálnou magnetofónovou kazetou 120 KB hier medzi inımi MANIC MINER, BOULDER DASH, PENETRATOR, DUCH&amp;PAMPÚCH, HLÍPA, PAMPUCH, FLAPPY, WURMI èi SABOTER. 
+Cie¾om konštrukcie je teda vyhotovenie zariadenia, z ktorého sa po pripojení napájacieho zdroja (AC/DC adaptéra), PS/2 klávesnice a klasického televízora so vstupom kompozitného videa/SCART stane plnohodnotné PMD-85/1. Navyše s virtuálnou magnetofónovou kazetou 113 KB hier medzi inımi MANIC MINER, BOULDER DASH, PENETRATOR, DUCH&amp;PAMPÚCH, HLÍPA, PAMPUCH, FLAPPY, WURMI èi SABOTER. 
 
 </p>
 
@@ -64,15 +68,15 @@ Cie¾om konštrukcie je teda vyhotovenie zariadenia, z ktorého sa po pripojení zdr
 
 <P><div><img src="schema.png" alt="Obr. 1"/><br/>Obr. è.1 </div><br/>
 
-Na obrázku 1 je znázornená obvodová schéma. Komunikácia s uívate¾om sa realizuje prostredníctvom externej klávesnice a televízneho prijímaèa. 
-Jeden z k¾úèovıch prvkov konštrukcie je zvládnutie generovania úplného televízneho signálu v rozlíšení 288x256 pixelov, prièom kadá šestica pixelov má dvojbitovı grafickı atribút, presne tak ako pôvodné PMD-85/1. 
+Na obrázku è.1 je znázornená obvodová schéma. Komunikácia s uívate¾om sa realizuje prostredníctvom externej klávesnice a televízneho prijímaèa. 
+Jeden z k¾úèovıch prvkov konštrukcie je zvládnutie generovania úplného televízneho signálu v rozlíšení 288x256 pixelov, prièom kadá šestica pixelov v TV riadku má dvojbitovı grafickı atribút, presne tak ako pôvodné PMD-85/1. Schéma a doska plošného spoja bola navrhnutá s pouitím freeware verzie programu <A href="http://www.cadsoft.de">EAGLE 4.1</a> 
 </P>
 
 
 <H2>VIDEO D/A prevodník</H2>
 <p>
-Generovanie kompozitného videa signálu <b>COMPOSITE_VIDEO</b> realizuje asymetrickı D/A prevodník realizovanı odporovou sieou R1, R3 a R4, ktorá mixuje TTL videodáta VIDEO_DATA a 
-synchronizaènú zmes SYNC do štandardného videosignálu cca 1 V<sub>šš</sub>. Signál COMPOSITE_VIDEO je vyvedenı na CINCH konektor VO0. Vopred upozoròujem e na jednovrstvojej doske plošného spoja <b>je nutné prepoji prepojkou PAD1 s COMPOSITE_VIDEO</b>. Obvod jasového atribútu, zloeného z diód D1, D2 a odporu R2 realizuje zvıšenie jasu zobrazovaného pixelu v prípade rovnakej hodnoty signálov BRIGHT=1 a VIDEO_DATA=1.
+Generovanie kompozitného videa (analógovı signál) <b>COMPOSITE_VIDEO</b> realizuje asymetrickı D/A prevodník realizovanı odporovou sieou R1-R4 a D1-2 ktorá mixuje TTL videodáta VIDEO_DATA a 
+synchronizaènú zmes SYNC do štandardného èiernobieleho videosignálu cca 1 V<sub>šš</sub>. Signál COMPOSITE_VIDEO je vyvedenı na CINCH konektor VO0. Vopred upozoròujem e na jednovrstvojej doske plošného spoja <b>je nutné prepoji prepojkou PAD1 s COMPOSITE_VIDEO</b>. Obvod jasového atribútu, zloenı z diód D1, D2 a odporu R2 realizuje zvıšenie jasu zobrazovaného pixelu v prípade rovnakej hodnoty signálov BRIGHT=1 a VIDEO_DATA=1. Softvérovo je realizovaná inverzia jasového atribútu BRIGHTNESS po stlaèení klávesy ALT+C. Opakované zatlaèenie cyklicky prepína vıznam jasového atribútu.
 <br/><br/>
 <div>
 <table border="1" align="center">
@@ -96,26 +100,49 @@ synchronizaènú zmes SYNC do štandardného videosignálu cca 1 V<sub>šš</sub>. Sign
 Tabu¾ka è.1.
 </div>
 <br/><br/>
-Napäové úrovne COMPOSITE_VIDEO sú ve¾ké pribline pod¾a tabu¾ky è.1, kde symboly logickıch úrovní H, L a X majú obvyklı vıznam. Z tabu¾ky je zrejmé e úrovne vıstupného kompozitného signálu nie sú exaktne pod¾a odporúèaní TV normy, ale neuberá to na funkènosti zapojenia èi ostrosti generovaného obrazu.  
+Napäové úrovne signálu COMPOSITE_VIDEO sú ve¾ké pribline pod¾a tabu¾ky è.1, kde symboly logickıch úrovní H, L a X majú obvyklı vıznam. Z tabu¾ky je zrejmé e úrovne vıstupného kompozitného signálu nie sú exaktne pod¾a odporúèaní TV normy, ale neuberá to na funkènosti zapojenia èi ostrosti generovaného obrazu. <br><br>
+
+Tie treba spomenú fintu, ktorú pouívalo mnoho 8biákov - namiesto generovania 625 riadkového obrazu (èie 2 rôzne polsnímky) s opakovacou frekvenciou 25 Hz, generujú sa 312 riadkové polsnímky (s opakovacou frekvenciou 50 Hz), èie na TV obrazovke sú kadé dva susedné TV riadky úplne zhodné. Zjednodušuje to logiku generovania, šetrí kapacitu videopamäte a obraz je ostrejší.  
 </p>
 
 <h2>PAMÄOVİ PODSYSTÉM</h2>
 <p>
-K procesoru ATmega128 (IC1) je pripojená 128 (alebo 64) KB SRAM v púzdre SOJ IC2, z ktorej sa momentálne vyuíva iba prvıch 64 KB. 
+K procesoru ATmega128 (IC1) je pripojená 128 (alebo 64) KB SRAM pamä v púzdre SOJ IC2 s dobou prístupu 70 ns, z ktorej sa momentálne vyuíva iba prvıch 64 KB. 
 
-Pamä je adresovaná 17 bitovou adresnou zbernicou, vytvorenou z portov monolitického mikropoèítaèa ATmega128 tak, aby procesor mohol v priebehu 2 taktov vysla 16 bitovú èas adresy inštrukciou OUT. 16-tym adresnım bitom sa prepína medzi dvoma 64 KB bankami pamäte a bene sa nezúèastòuje adresnej aritmetiky. Pod¾a schémy na obrázku è.1 vidíme e adresné bity 0. a 15. sú porozhadzované po portoch PB a PD na prvı poh¾ad nezmyselne, ale tak aby na jednovrstvovom plošnom spoji nevzniklo kríenie vodièov. Dátová obojsmerná zbernica je riešená pouitím celého 8 bitového portu PC. Signály èítania /RD a zápisu /WR sú generované 2 bitmi portu PA. 
+Pamä je adresovaná 17 bitovou adresnou zbernicou, vytvorenou z portov monolitického mikropoèítaèa ATmega128 tak, aby procesor mohol v priebehu 2 taktov vysla 16 bitovú èas adresy inštrukciou OUT. 16-tym adresnım bitom sa prepína medzi dvoma 64 KB bankami pamäte a tento bit sa bene nezúèastòuje adresnej aritmetiky. Pod¾a schémy na obrázku è.1 vidíme e adresné bity 0. a 15. sú porozhadzované po portoch PB a PD na prvı poh¾ad neobvykle, tak aby na jednovrstvovom plošnom spoji nevzniklo kríenie vodièov. Pamät SRAM je necitlivá na vımenu poradia bitov adresnej a bitov dátovej zbernice. Dátová obojsmerná zbernica je riešená pouitím celého 8 bitového portu PC. Signály èítania /RD a zápisu /WR sú generované 2 bitmi portu PA.  
 
-Pamä je trvalo selektovaná signálmi /E1.E2 = 1.  
+Pamä je trvalo selektovaná signálmi tak aby: /E1.E2 = 1.  
 </p>
-<p>
+<!--p>
 
 Vnútornú pamä ATmega128 typu FLASH vyuívame jednak na uloenie softvéru simulujúcim správanie PMDèka (cca 8 KB) a programov pre PMD-85 (cca 120 KB) simulujúcou magnetofón a ROM modul s programom BASIC-G/V1. Táto èas programového vybavenia je uloená v kompresovanom RLE tvare. Vnútorná 4 KB EEPROM procesora ATmega128 je taktie vyuitá do posledného bajtu na uloenie 4 KB ROM firmware PMDèka.   
 
-</p><p>
+</p-->
+<table border="1" align="center">
+	<tr><td colspan="3"><b>Vyuitie adresného priestoru ATmega128</b></tr>
+		<tr><td rowspan="3"><b>interná FLASH,<br> 64 K x 16 bitov (128 KB)</b></td>
+			<td>0x0000&nbsp;&divide;&nbsp;0x0C9C</td> <td>6.4 KB emulaènı program - generovanie TV obrazu, emulácia 256 inštrukcií procesora 8080, obsluha klávesnice, emulácia ostatnıch periférií PMD-85/1</td></tr>
+		
+		<tr><td>0x0C9D &divide; 0x1E9C</td><td>9 KB obsah ROM modulu pôvodného BASIC G</td></tr>
+		<tr><td>0x1E9D &divide; 0xFFFF</td><td>cca 113 KB, obsah magnetofónovej pásky PMDèka - hry, programy.</td></tr>
+		<tr><td rowspan="1"><b>interná EEPROM,<br> 4 K x 8 bitov (4 KB)</b></td>
+			<td>0x0000&nbsp;&divide;&nbsp;0x0FFF</td> <td>4 KB ROM firmware PMD-85/1</td></tr>
+		<tr><td rowspan="1"><b>interná RWM,<br> 4 K x 8 bitov (4 KB)</b></td>
+			<td>0x0000&nbsp;&divide;&nbsp;0x0FFF</td> <td>4 KB - všeobecné pouitie, zásobník, odkladanie èastí obrazu pri zobrazení informácií o emulátore (po stlaèení ALT+S),  </td></tr>
+		<tr><td rowspan="2"><b>externá RWM,<br>128 K x 8 bitov (128 KB)</b></td>
+			<td>0x00000&nbsp;&divide;&nbsp;0x0FFFF</td> <td>64 KB - 
+				Uloenie obrazu pamäte emulovaného PMD-èka. Oblas 0x08000÷0x0BFFF je softvérovo chránená proti zápisu. Pri štarte emulátora sa skopíruje obsah internej EEPROM do oblasti 0x08000 ÷ 0x08FFF a následne sa spustí emulátor procesora 8080 od adresy 0x08000. </td></tr>
+		<tr><td>0x10000 ÷ 0x1FFFF</td><td>Oblas nie je momentálne vyuitá, a preto môe by doska plošného spoja osadená ib 64 KB SRAM</td></tr>
 
-Takéto riešenie pripojenia externej pamäte RAM umoòuje zvıši priepustnos pamäového podsystému oproti štandardne pouívanemu zapojeniu z manuálu s pouitím záchytného registra. ATmega128 bohuial nepodporuje lineárny pamäovı priestor externej RAM plnıch 64 KB, nako¾ko vnútorná RAM a registre sú adresované tımi istımi inštrukciami ako externá pamä. Na emuláciu správania PMDèka je potrebnıch lineárnych 64 KB priestoru RAM, ktoré sú vyuívané nasledovne:  
+</table>
+
+
+<p>
+
+Takéto riešenie pripojenia externej pamäte RAM umoòuje zvıši priepustnos pamäového podsystému oproti štandardne pouívanemu zapojeniu z manuálu s pouitím záchytného registra (ušetrí sa teda jeden integrovanı obvod, zjednoduší doska plošnıch spojov). ATmega128 bohuial nepodporuje lineárny pamäovı priestor externej RAM plnıch 64 KB, nako¾ko vnútorná RAM a registre sú v adresované tımi istımi inštrukciami ako externá pamä. Aj z tohto dôvodu nie je pouitie odporúèaného zapojenia externej pamäte pod¾a manuálu vıhodné.  Na emuláciu správania PMDèka je potrebnıch lineárnych 64 KB priestoru RAM, ktoré sú vyuívané nasledovne:  
 
 <table border="1" align="center">
+	<tr><td colspan="2"><b>Vyuitie adresného priestoru PMD-85/1</b></tr>
 	<tr><td>0x0000 &divide; 0x7FFF</td><td> 32 KB RAM 	</td></tr>
 	<tr><td>0x8000 &divide; 0x8FFF</td><td> 4 KB ROM firmware</td></tr>
 	<tr><td>0x9000 &divide; 0xBFFF</td><td> 12 KB neobsadené </td></tr>
@@ -127,17 +154,17 @@ Takéto riešenie pripojenia externej pamäte RAM umoòuje zvıši priepustnos pamä
 <h2>VIDEOPROCESOR</h2>
 <p>
 Videoprocesor periodicky èíta obsah videopamäte a zaisuje generovanie TV signálu cez VIDEO D/A prevodník. 
-Táto èinnos zaberá pouitému mikroprocesoru ATmega128 pribline 3/4 strojového èasu. Zvyšná 1/4 vıkonu postaèuje na simuláciu chovania procesora 8080, pouitom v originálnom PMD-85. Pozrime sa podrobnejšie ako a z èoho sa generuje videosignál. 
+Táto èinnos zaberá pouitému mikroprocesoru ATmega128 pribline 3/4 z celkového strojového èasu. Zvyšná 1/4 vıkonu postaèuje na simuláciu chovania procesora 8080, pouitom v originálnom PMD-85. Pozrime sa podrobnejšie ako a z èoho sa generuje videosignál. 
 </p>
 <p>
-Videopamä je 16 KB ve¾ká pamä RAM organizovaná do 256 riadkov po 64 bajtoch. Jeden riadok obsahuje 48 "vidite¾nıch" bajtov a 16 bajtov ktoré sú zatemnené. Jeden bajt je pod¾a nasledovnej tabu¾ky organizovanı tak e nesie informáciu o 6 pixeloch a k nim prislúchajúci 2 bitovı atribút:
+Videopamä je 16 KB pamä RAM, logicky organizovaná do 256 riadkov po 64 bajtoch. Jeden riadok obsahuje 48 "vidite¾nıch" bajtov a 16 bajtov ktoré sa nezobrazujú (doba spätného chodu TV lúèa). Jeden bajt je pod¾a nasledovnej tabu¾ky organizovanı tak e nesie informáciu o 6 pixeloch a k nim prislúchajúci 2 bitovı atribút:
 <br/><br/>
 <table border="1" align="center">
 	<tr><th>D7</th><th>D6</th><th>D5</th><th>D4</th><th>D3</th><th>D2</th><th>D1</th><th>D0</th></tr>
 	<tr><td>BLINK</td><td>BRIGHTNESS</td><td>P0</td><td>P1</td><td>P2</td><td>P3</td><td>P4</td><td>P5</td></tr>
 </table>
 <br/>
-Zaujímavé je reverzné poradie pixelov P0 a P5, t.j. pixel v¾avo má nišiu bitovú váhu ako pixel leiaci vpravo od neho v rámci kadej šestice pixelov. Takto organizovanı pamäovı priestor videopamäte umoòuje zobrazi obraz v rozlíšení 288 &times; 256 pixelov. Kadá horizontálna šestica pixelov môe by zobrazená navyše v 4-och módoch:
+Zaujímavé je reverzné poradie pixelov P0 a P5, t.j. pixel v¾avo má nišiu bitovú váhu ako pixel leiaci vpravo od neho v rámci kadej šestice pixelov. <br>Takto organizovanı pamäovı priestor videopamäte umoòuje zobrazi obraz v rozlíšení 288 &times; 256 pixelov. Kadá horizontálna šestica pixelov môe by zobrazená navyše v 4-och módoch:
 <br/><br/>
 
 <table border="1" align="center">
@@ -153,48 +180,538 @@ Zaujímavé je reverzné poradie pixelov P0 a P5, t.j. pixel v¾avo má nišiu bitov
 
 </p>
 <p>
-Najpracnejšou úlohou videoprocesora je serializácia jedného TV mikroriadku, t.j. rozklad 48 bajtov do 288 pixelov spolu s grafickımi atribútmi v reálnom èase. To vyaduje spracova 48 bajtov poèas 48 us, teda zvládnu konverziu 8 Mb/s dát do 6 Mpx/s (megapixelov za sekundu). To znamená pre kadı bajt vysla adresu na adresnú zbernicu, preèíta ho, vysla postupne 6 po sebe idúcich pixelov, inkrementova ukazovate¾e .... Pri pouití procesora ATmega128 taktovaného na 18 MHz by sme museli jeden pixel vygenerova za 3 periódy hodín. Keïe bene dostupnı je procesor beiaci na 16 MHz, bolo nutné urobi kompromis a generova nerovnako široké pixely pod¾a tabu¾ky:
+
+Najpracnejšou úlohou videoprocesora je serializácia jedného TV mikroriadku, t.j. rozklad 48 bajtov do 288 pixelov spolu s grafickımi atribútmi v reálnom èase. To vyaduje spracova 48 bajtov poèas 48 &micro;s, teda zvládnu konverziu 8 Mb/s dát do 6 Mpx/s (megapixelov za sekundu). To znamená pre kadı bajt vysla adresu na adresnú zbernicu, preèíta ho, vysla postupne 6 po sebe idúcich pixelov, inkrementova ukazovate¾e .... Pri pouití procesora ATmega128 taktovaného na 18 MHz by sme museli jeden pixel vygenerova za 3 periódy hodín. Keïe bene dostupnı je procesor beiaci na 16 MHz, bolo nutné urobi kompromis a generova nerovnako široké pixely pod¾a tabu¾ky:
 
 <br/><br/>
 <table border="1" align="center">
-	<tr><td>P0</td><td>P1</td><td>P2</td><td>P3</td><td>P4</td><td>P5</td><th>= 6 pixelov</th></tr>
+	<tr><td>P0</td><td>P1</td><td>P2</td><td>P3</td><td>P4</td><td>P5</td><th align="left">= 6 pixelov (1&nbsp;&micro;s)</th></tr>
 	<tr><td>3 clk</td><td>2 clk</td><td>3 clk</td><td>3 clk</td><td>2 clk</td><td>3 clk</td><th align="left">= 16 clk@16 MHz</th></tr>
-</table>
-<br/>
-Dva pixely z kadej šestice sú skrátené na 2/3 šírky normálneho pixelu aby 6 pixelov bolo vygenerovanıch za 16 periód hodín, t.j. za 1 us. Pri takte 18 MHz sú pixely (po rekompilácií programu) rovnako široké. 
-
-<br/><br/>
-<table border="1" align="center">
-	<tr><td>P0</td><td>P1</td><td>P2</td><td>P3</td><td>P4</td><td>P5</td><th>= 6 pixelov</th></tr>
 	<tr><td>3 clk</td><td>3 clk</td><td>3 clk</td><td>3 clk</td><td>3 clk</td><td>3 clk</td><th align="left">= 18 clk@18 MHz</th></tr>
 </table>
 <br/>
+Dva pixely z kadej šestice sú skrátené na 2/3 šírky normálneho pixelu aby 6 pixelov bolo vygenerovanıch za 16 periód hodín, t.j. za 1 &micro;s. Pri takte 18 MHz sú pixely (po rekompilácií programu) rovnako široké. Frekvencia procesora je plne volite¾ná konštantou v programe. Pri nastavení frekvencie (a rekompilácií) na nišiu hodnotu ako 16 MHz nie je moné generova 288 pixelov na TV riadok, ale úmerne sa zníi poèat pixelov na riadok. Napríklad pri 8 MHz je to 144 pixelov. Podotıkam o tejto monosti - pri oivovaní konštrukcie je moné zaèa s 8 MHz internım RC oscilátorom. Ale na reálne pouívanie je to ve¾mi pomalé, obraz sa trasie (pretoe RC oscilátor je menej stabilnı), je vidite¾ná iba cca polovica z kadého TV riadku. Pri 8 MHz emulácia PMDèka nebeí u v reálnom èase, procesor ide príliš pomaly.   
 
+<br/>
+<br/>
 
-Serializácia videodát spolu s grafickımi atribútmi je moná vïaka špeciálnemu rozloeniu signálov VIDEO_DATA a BRIGHT na porte PORTE, ktoré umoòuje vyui inštrukciu aritmetického posuvu vpravo (ASR). Blikací atribút BLINK je realizovanı èisto softvérovo.
+Serializácia videodát spolu s grafickımi atribútmi je moná aj vïaka špeciálnemu rozloeniu signálov VIDEO_DATA a BRIGHT na porte PORTE, ktoré umoòuje vyui inštrukciu aritmetického posuvu vpravo (ASR). Blikací atribút BLINK je realizovanı èisto softvérovo.
 
 </p>
 <h3>Generovanie synchronizaènıch signálov</h3>
 <p>
-Na vytvorenie úplneho kompozitného videa potrebujeme okrem modulaèného signálu VIDEO_DATA taktie synchronizaènı signál SYNC. Horizontálny synchronizaènı signál s opakovacou frekvenciou 15625 Hz a šírkou impulzu 4.7 us negatívnej polarity je realizovanı PWM modulátorom vyvedenom na pine OC3A. Polohu horizontálneho synchronizaèného impulzu je moné nastavi takmer ¾ubovo¾ne vzh¾adom na zaèiatok generovania TV mikroriadku. V súèasnej verzii sa 6 us po horizontálnom synchronizaènom impulze sa zaèína kresli prvı pixel daného mikroriadku. Za jednu sekundu sa teda zobrazí 15625 mikroriadkov èo tvorí 312 mikroriadkov s opakovacou frekvenciou 50.08 Hz. Je zvolené neprekladané riadkovanie, t.j. susednı párny aj nepárny snímok sú totoné. (Klasická TV norma uvauje o 625 TV riadkoch, ktoré sa prenášajú s opakovacou frekvenciou 25 Hz systémom: najprv párny snímok tvorenı 312.5 riadkami a potom nepárny snímok 312.5 riadkov. 312.5 riadkové snímky sa teda prenášajú frekvenciou 50 Hz.)
+Na vytvorenie úplneho kompozitného videa potrebujeme okrem modulaèného signálu VIDEO_DATA taktie synchronizaènı signál SYNC. Horizontálny synchronizaènı signál s opakovacou frekvenciou 15625 Hz a šírkou impulzu 4.7 &micro;s negatívnej polarity je realizovanı internım PWM modulátorom vyvedenom na pine OC3A. Polohu horizontálneho synchronizaèného impulzu je moné nastavi takmer ¾ubovo¾ne vzh¾adom na zaèiatok generovania TV mikroriadku - konštantou v programe. V súèasnej verzii sa 6 &micro;s po horizontálnom synchronizaènom impulze sa zaèína kresli prvı pixel daného mikroriadku. Za jednu sekundu sa teda zobrazí 15625 mikroriadkov èo tvorí 312 mikroriadkov s opakovacou frekvenciou 50.08 Hz. Je zvolené neprekladané riadkovanie, t.j. susednı párny aj nepárny snímok sú totoné. (Klasická TV norma uvauje o 625 TV riadkoch, ktoré sa prenášajú s opakovacou frekvenciou 25 Hz systémom: najprv párny snímok tvorenı 312.5 riadkami a potom nepárny snímok 312.5 riadkov. 312.5 riadkové snímky sa teda prenášajú frekvenciou 50 Hz.)
 </p>
 
 <p>
-Z  celkového poètu 312 mikroriadkov sa aktívne zobrazuje 256 riadkov. Zvyšné mikroriadky slúia sú nepouité alebo slúia na prenos snímkovıch (vertikálnych) synchronizaènıch impulzov. Vertikálny synchronizaènı impulz tvorí 5 TV mikroriadkov tvorenıch s predåenım horizontálnym synchronizaènım impulzom na 32 us. Poloha - vertikálne a horizontálne posunutie obrazu je moné zmeni v programe zmenením práve posunutia synchronizácie. Jedná sa o zjednodušené implementovanie TV normy. Konštrukcia bola overená na televízoroch: CTV 2134A.
+Z  celkového poètu 312 mikroriadkov sa aktívne zobrazuje 256 mikroriadkov. Zvyšné mikroriadky slúia sú nepouité alebo slúia na prenos snímkovıch (vertikálnych) synchronizaènıch impulzov. Vertikálny synchronizaènı impulz tvorí 5 TV mikroriadkov tvorenıch s predåenım horizontálnym synchronizaènım impulzom na 32 &micro;s. Poloha - vertikálne a horizontálne posunutie obrazu je moné zmeni v programe zmenením práve posunutia synchronizácie. Jedná sa o zjednodušené implementovanie TV normy. Konštrukcia bola overená na televízoroch: CTV 2134A a ïa¾ších. Pri vıvoji obsluného programu bola odhalená nutnos generova vertikálny synchronizaènı impulz ako 5-ticu predåenıch horizontálnych impulzov na 32 &micro;s. Jeden impulz proste niektorım TV prijímaèom jednoducho nestaèil na snímkovú synchronizáciu. 
 </p>
 
 <h2>EMULÁCIA PROCESORA 8080</h2>
 
 <p>
-Keïe ATmega128 je vyaená generovaním videosignálu, vygenerovanie kadého TV mikrotriadku trvá cca 50 us zo 64 us. Zvyšnı èas spätného chodu lúèa cca 12 us je vyuitı práve na emuláciu správania procesora Intel 8080 a ostanıch obvodov PMDèka. 
+Keïe ATmega128 je vyaená generovaním videosignálu, vygenerovanie kadého TV mikrotriadku trvá cca 50 &micro;s zo 64 &micro;s. Zvyšnı èas spätného chodu lúèa cca 12 &micro;s je vyuitı práve na emuláciu správania procesora Intel 8080 a ostanıch obvodov PMDèka. 
+</p>
+
+<h2>Doska plošného spoja (DPS)</h2>
+<p>
+Konštrukcia plošného spoja bola navrhnutá tak aby bola realizovate¾ná na jednostrannej doske plošného spoja (freeware EAGLE umoòuje navrhova max. 10cm&times;10cm obojstranne) ako vidíme na obrázku è.2. Najpracnejšou úlohou bolo zabezpeèi nekríenie vodièov, èo sa takmer podarilo a na jeden signál, ktorı <b>je nutné prepoji prepojkou PAD1 s COMPOSITE_VIDEO (CINCH) konektorom</b>. Zabezpeèi nekríenie ostatnıch signálov na DPS sa podarilo najmä vhodnım priradením signálov I/O portov procesora ATmega128, na schéme je to vidie ako nelogické poprehadzovanie jednotlivıch signálov adresnej a dátovej zbernice. Taktie niektoré bity I/O portov sú pouité iba rozvod inıch signálov alebo napájania, najmä v priestore pod procesorom.
+<br><br>
+<img src="../schema/plosak.bmp" xstyle="float:right;margin-left:10px;margin-top:5px; margin-bottom:5px;">
+Obrázok è.2
+<br><br>
+<b>Postup vıroby DPS:</b>
+<ol>
+	<li>Jednoduchá vıroba DPS, odskúšaná bola metóda fotocestou - jednostranne plátovanı kuprextit s nastriekanou vrstvou fotorezistu POSITIV-20, ïalej je potrebná PE fólia s vytlaèenım  vzorom DPS (postaèuje vytlaèená v predajni FAXCOPY). Prenos vzoru DPS na fotorezist prostredníctvom horského slnka. Ve¾mi nutné je dodra bezprašnos pracoviska vzh¾adom na šírku spojov (10 mil) a medzier.</li>
+	<li>Na vyèistenú vyvolanú, vyleptanú a vyvàtanú DPS odporúèam nanies vrstvu roztoku kolofónie v liehu, necha chví¾u odschnú a nalepi procesor na zodpovedajúce miesto na DPS. Odporúèam zafixova pájkovaèkou aspoò na krajnıch 8-mich pinoch púzdra TQFP 64. Podobne nalepi do kolofónie a zafixova aj pamä a ostatné súèiastky. Èie zaèíname osádzaním súèiastok od najdrahších s najviac vıvodmi. Je to tım e na osadenie 64 pinového švába budete potrebova priestor na jeho posúvanie v kolofónií pinzetou. Taktie je vhodné osadi súèiastky s klasickımi vıvodmi, prv ne kolofónia vytvrdne.</li>
+	
+	<li>Na SMT montá súèiastok staèí poui klasickú transformátorovú pájkovaèku na ktorej hrot upevníme tenkı drôtik na naberanie mikrokvapiek PbSn pájky. Kolofóniou dosiahneme aby sme nezlepili piny SMD súèiastok.</li>
+	
+	<li>Prvú vrstvu kolofónie odporúèam zotrie liehom, necha odschnú a nanies novú vrstvu roztoku kolofónie.</li>
+</ol>	
+
+
+</p>
+<h2>Oivenie konštrukcie</h2>	
+<p>
+Po správnom osadení všetkıch súèiastok a konektorov vyskúšajte pripoji prúdovo obmedzenı zdroj napätia (napr. adaptér) cca 9-15 V jednosmernıch na napájací konektor. Na napájacích pinoch procesora skontrolujte prítomnos napájacieho napätia +5 V. Ak je napájanie procesora v poriadku, pripojte ISP programátor na zbernicu SPI a skontrolujte opä napätie, èi pripojenı programátor nemá ve¾kú spotrebu. Otestujte funkènos ISP SPI rozhrania napríklad preèítaním FLASH/EEPROM/fuse bitov z procesora.<br>
+
+Následne je moné prikroèi k nastaveniu poistiek (fuses) procesora a nahratiu obsahuje pamäte FLASH a EEPROM do procesora ATmega128. 
 </p>
 
 
 <h2>Download programu z PC</h2>
 <p>
-Na nahratie (upload) emulaèného programu do pamäte FLASH procesora Atmega128 vyuívame rozhranie SPI vyvedené na konektore JP1 (ISP). Pretoe niektoré signály rozhrania sú pouívané aj rozhraním ku PS/2 klávesnici je bezpodmieneène nutné pred uploadom ju odpoji, pretoe klávesnica by prenos rušila. Poèas uploadu môeme na pripojenom TV sledova horizontálne èiary, indikujúce prebiehajúci prenos.
+Na nahratie (upload) emulaèného programu do pamäte FLASH a EEPROM a nastavenia poistiek (fuses) procesora Atmega128 vyuívame rozhranie SPI vyvedené na konektore JP1 (ISP). Pretoe niektoré signály rozhrania sú pouívané aj rozhraním ku PS/2 klávesnici je bezpodmieneène nutné pred uploadom ju odpoji, pretoe klávesnica by prenos rušila. Poèas uploadu môeme na pripojenom TV sledova horizontálne èiary, indikujúce prebiehajúci prenos - podobne ako kedysi na legendárnom ZX Spectre pri nahrávaní programov z mgf pásky. Na upload súborov cez SPI rozhranie sa osvedèil program <a href="http://www.lancos.com"><b>PonyProg</b></a> a <b>avr-dude</b> z balíka utilít WinAVR. 
+</p>
+<h2>Nastavenie poistiek (fuses) procesora</h2>
+<p>
+Na prepnutie procesora do módu ATmega128 a pouitie externého kryštálu 16 MHz je potrebné nastavi poistky takto:<br>
+<pre>
+fuse_high_byte = 0x81
+fuse_low_byte = 0xFE
+fuse_ext_byte = 0xFF
+</pre>
+Èie to znamená:
+<table border="1">
+	<tr><td width="30%" >EESAVE</td><td width="10%" >0 </td><td width="50%" rowspan="10">Ostatné poistky nastavi na hodnotu 1 (zakúpenı procesor by mal ma tak nastavené). Nula v tabu¾ke znamená naprogramovanı bit (prepálená poistka). <b> Upozornenie - ATmega128 je od vıroby prednastavená v reime kompatibility s ATmega103, je nutné preto nastavi správne poistky pod¾a tejto tabu¾ky, inak obslunı program nebude fungova správne. M103C=1</b></td></tr>
+		<tr><td>M103C</td><td>1</td></tr>
+<tr><td>BOOTSZ1</td><td>0</td></tr>
+<tr><td>BOOTSZ0</td><td>0</td></tr>
+<tr><td>SPIEN</td><td>0</td></tr>
+<tr><td>CKOPT</td><td>0</td></tr>
+
+<tr><td>CKSEL3</td><td>1 </td></tr>
+<tr><td>CKSEL2</td><td>1 </td></tr>
+<tr><td>CKSEL1</td><td>1 </td></tr>
+<tr><td>CKSEL0</td><td>0</td></tr>
+</table>
 </p>
 
+<h2>Upload obsahu FLASH a EEPROM do procesora ATmega128</h2>
+<p>
+V adresári code/ predkompilované obsahy EEPROM pamäte pmd.eep a FLASH pamäte pmd.hex. S ich uploadom by ste nemali ma iadne problémy. V prípade úspešného nahratia dát do pamätí (a správnom nastavení poistiek) by ste mali na pripojenom TV prijímaèi káblom CINCH-SCART preèíta hlásenie: <b><pre>** PMD-85 READY /1.0 **</pre></b> 
+Následne staèí odpoji ISP programátor a zasunú PS/2 konektor AT klávesnice a môete zaèa pracova s Vaším novım PMDèkom. <b>ISP programátor a klávesnica nesmú by zapojené súèasne!</b>, pretoe PC-AT klávesnica zdiela port spolu s ISP programátorom<br>Ako do procesora napáli programy o ktoré máte záujem z pôvodného PMD sa dozviete v nasledujúcich ïalej - je však potrebné ma monos prekompilova zdrojové súbory. <b>Z h¾adiska elektromagnetickej kompatibility nie je vhodné ma súèasne pripojenı TV prijímaè a zasunutı ISP programátor v našom PMD + poèítaè PC, hrozí nebezpeèie vytvorenia zemnej sluèky pri nedokonalom oddelení zdrojov jednotlivıch prístrojov od siete!</b> 
+</p>
+
+<h2>Popis klávesnice</h2>
+<p>
+Ako vstupnú perifériu pouívalo PMD-85-1 neštandardnú QWERTZ klávesnicu, ktorej klávesy sú namapované na PS/2 klávesnicu nasledovne: <br>
+ENTER = EOL<br>
+CTRL  = STOP<br>
+ALT   = MENU:<br>
+ALT+S = pozastavenie emulácie, vıpis krátkeho infa.<br>
+ALT+1 alebo ALT+ESC = RESET.<br>
+ALT+C = prepnutie grafického atribútu jas (BRIGHTNESS)
+<br><br>
+<style>
+	.kbd tr td {
+		border:2px solid black;
+		font-family: monospace;
+		text-align:center;
+	}
+</style>
+<table class="kbd" style="" border="0">
+	<tr>
+	  <td colspan="3">Esc</td>	
+	  <td colspan="2"></td>	
+	  <td colspan="3">K0</td>	
+	  <td colspan="3">K1</td>	
+	  <td colspan="3">K2</td>	
+	  <td colspan="3">K3</td>	
+	  <td colspan="2"></td>	
+	  <td colspan="3">K4</td>	
+	  <td colspan="3">K5</td>	
+	  <td colspan="3">K6</td>	
+	  <td colspan="3">K7</td>	
+	  <td colspan="2"></td>	
+	  <td colspan="3">K8</td>	
+	  <td colspan="3">K9</td>	
+	  <td colspan="3">K10</td>	
+	  <td colspan="3">K11</td>	
+	  <td colspan="3"></td>	
+
+  </tr>
+  <tr><td></td></tr>
+
+	<tr>
+	  <td colspan="3">RCL</td>	
+	  <td colspan="3"><sup>!</sup>1</td>	
+	  <td colspan="3"><sup>&quot;</sup>2</td>	
+	  <td colspan="3"><sup>#</sup>3</td>	
+	  <td colspan="3"><sup>$</sup>4</td>	
+	  <td colspan="3"><sup>%</sup>5</td>	
+	  <td colspan="3"><sup>&amp;</sup>6</td>	
+	  <td colspan="3"><sup>'</sup>7</td>	
+	  <td colspan="3"><sup>(</sup>8</td>	
+	  <td colspan="3"><sup>)</sup>9</td>	
+	  <td colspan="3"><sup>-</sup>0</td>	
+	  <td colspan="3"><sup>=</sup>_</td>	
+	  <td colspan="3">&nbsp;</td>	
+	  <td colspan="6">&lt;-</td>	
+
+	  <td colspan="2"></td>	
+	  <td colspan="3">&nbsp;</td>	
+	 
+	  <td colspan="3">&nbsp;</td>	
+	  <td colspan="3">&nbsp;</td>	
+	  <td colspan="3"></td>	
+	  
+	  <td colspan="3">WRK</td>	
+
+	  <td colspan="3"><sup>?</sup>/</td>	
+	  <td colspan="3">C-D</td>	
+	  <td colspan="3">&nbsp;&nbsp;</td>	
+
+  </tr>
+	<tr>
+		<td colspan="5">CLR</td>	
+		<td colspan="3">Q</td>	
+		<td colspan="3">W</td>	
+		<td colspan="3">E</td>	
+		<td colspan="3">R</td>	
+		<td colspan="3">T</td>	
+		<td colspan="3">Z</td>	
+		<td colspan="3">U</td>	
+		<td colspan="3">I</td>	
+		<td colspan="3">O</td>	
+		<td colspan="3">P</td>	
+		<td colspan="3">@</td>	
+		<td colspan="3"><sup>^</sup>\</td>	
+		<td colspan="4" rowspan="2">EOL</td>	
+
+
+		<td colspan="2"></td>	
+		<td colspan="3">INS</td>	
+	 
+		<td colspan="3">HOME</td>	
+		<td colspan="3">|&lt;-</td>	
+	
+		<td colspan="3"></td>	
+	  
+		<td colspan="3">INS</td>	
+
+		<td colspan="3">DEL</td>	
+		<td colspan="3">|&lt;-</td>	
+		<td colspan="3" rowspan="2">&nbsp;</td>	
+
+
+	</tr>
+
+
+	<tr>
+		<td colspan="6">&nbsp;</td>	
+		<td colspan="3">A</td>	
+		<td colspan="3">S</td>	
+		<td colspan="3">D</td>	
+		<td colspan="3">F</td>	
+		<td colspan="3">G</td>	
+		<td colspan="3">H</td>	
+		<td colspan="3">J</td>	
+		<td colspan="3">K</td>	
+		<td colspan="3">L</td>	
+		<td colspan="3"><sup>+</sup>;</td>	
+		<td colspan="3"><sup>*</sup>:</td>	
+		<td colspan="3"></td>	
+
+		<td colspan="2"></td>	
+		<td colspan="3">DEL</td>	
+	 
+		<td colspan="3">END</td>	
+		<td colspan="3">-&gt;|</td>	
+	
+		<td colspan="3"></td>	
+	  
+		<td colspan="3">&lt;-</td>	
+
+		<td colspan="3">HOME</td>	
+	  <td colspan="3">-&gt;</td>	
+
+
+  </tr>
+
+	
+	<tr>
+		<td colspan="4">Shift</td>	
+		<td colspan="3">&nbsp;</td>	
+		<td colspan="3">Y</td>	
+		<td colspan="3">X</td>	
+		<td colspan="3">C</td>	
+		<td colspan="3">V</td>	
+		<td colspan="3">B</td>	
+		<td colspan="3">N</td>	
+		<td colspan="3">M</td>	
+		<td colspan="3"><sup>&gt;</sup>,</td>	
+		<td colspan="3"><sup>&lt;</sup>.</td>	
+		<td colspan="3"><sup>?</sup>/</td>	
+		<td colspan="5">Shift</td>	
+		<td colspan="3"><sup>^</sup>\</td>	
+
+
+		<td colspan="2"></td>	
+		<td colspan="3"></td>	
+	 
+		<td colspan="3">|&lt;-</td>	
+		<td colspan="3"></td>	
+	
+		<td colspan="3"></td>	
+	  
+		<td colspan="3">|&lt;-</td>	
+
+		<td colspan="3">END</td>	
+	  <td colspan="3">-&gt;|</td>	
+	  <td colspan="3" rowspan="2">EOL</td>	
+
+  </tr>
+  
+
+	<tr>
+		<td colspan="4">STOP</td>	
+		<td colspan="5">&nbsp;</td>	
+		<td colspan="5">MENU</td>	
+		<td colspan="13">&nbsp;</td>	
+		<td colspan="5">MENU</td>	
+		<td colspan="5">&nbsp;</td>	
+		<td colspan="4">&nbsp;</td>	
+		<td colspan="4">STOP</td>	
+
+		<td colspan="2"></td>	
+		<td colspan="3">&lt;-</td>	
+	 
+		<td colspan="3">-&gt;|</td>	
+		<td colspan="3">-&gt;</td>	
+	
+		<td colspan="3"></td>	
+	  
+		<td colspan="6">INS</td>	
+		  <td colspan="3">DEL</td>	
+
+
+  </tr>
+
+
+</table><br><br>
+Treba upozorni e pôvodné PMD-85/1 bolo osadené nekvalitnou klávesnicou a preto bolo softvérovo realizované potlaèenie zákmitov jej kontaktov. Preto niekedy môete ma pocit e sa klávesnica zasekla, ale je to vlastnos pôvodného SCAN algoritmu PMDèka, ktorım sa zákmity ošetrovali. Príliš krátke stlaèenie alebo príliš rıchle písanie na klávesnici je náchylné na vıskyt stavu zablokovanej klávesnice, ale to je dané nedokonalosou firmware PMD-85/1.  
+</p>
+<p>
+
+</p>
+<h2>Základné povely PMD-85/1</h2>
+<p>
+Medzi základné povely, ktoré by som Vám dovolil pripomenú patria:
+<br>
+<b><pre>MGLD XY</pre></b> (napríklad MGLD 02) spôsobí nahratie hry (alebo programu) z magnetofónovej pásky, ktorá je v našej konštrukcií realizovaná ako èas FLASH pamäte ATmega128. XY je dekadické dvojciferné èíslo, pod ktorım je danı program uloenı na páske. 
+Niektoré programy v strojovom kóde majú samospúštanie (realizované nahratím èasti zásobníka z mgf pásky), niektoré treba spusti povelom: 
+<b><pre>JUMP ADDR</pre></b>kde ADDR je 4-ciferná hexadecimálna adresa spustenia. Drvivá väèšina hier pre PMDèko pouíva na štartovanie tieto adresy: 0000, 0100,1000, 1500 alebo 2000.
+<b><pre>DUMP ADDR</pre></b>vıpis obsahu pamäte od adresy ADDR
+<b><pre>BASIC G</pre></b>spustenie interpretera BASIC-u. Na nahrávanie programov pod BASICom treba poui príkaz:
+<b><pre>LOAD Y</pre></b> (napríklad LOAD 10) na nahratie programu z magnetofónovej pásky (Y je dekadické èíslo programu, pod ktorım je uloenı na páske) a spusti ho je moné príkazom: 
+<b><pre>RUN</pre></b>
+Samozrejme e PMDèko pozná omnoho viac príkazov, v BASIC G Vám môem odporúèi nahra si nejakú BASIC hru (napr. WURMI, BOMBARDER) a príkazom <b>LIST</b> si pozrie zdrojovı program. Urèite sa na nejaké finesy o niekdajšom programovaní rozpamätáte.
+</p>
+<h2>Hry (rom0)</h2>
+Nasledovnı popis niektorıch hier PMD-85 pochádza z materiálov autora DOSovského emulátora PMD-85 <b>Milana Galèíka</b> z Topo¾èian. Topo¾èany sú asi mesto s najvyššou koncentráciou autorov emulátorov PMDèiek vôbec... Niektoré hry v BASIC-u niesú prikompilované v ATmega128, ale je moné ich tam nahra. <br><Br>
+
+- Niektoré hry sú tzv. samospúšacie, t.j. po ukonèení nahrávania sa samé
+spustia. U tıch problémy nebıvajú. Niektoré sa však musia spusti explicitne,
+a to tak, e po ukonèení nahrávania sa napíše "JUMP xxxx", kde xxxx je
+hexadecim lne štvorèíslie, tzv. spúšacia adresa. <br>
+- Pri kadej hre je uvedené jej èíslo, názov, spúšacia adresa (ak má hra
+autoštart, tak ????), ovládanie a krátky pokec.<br>
+<img src="manic1.bmp" style="float:right; padding-left:10px;">
+- 00, <b>AUTO</b>, 2000. Ve¾mi jednoduché riadenie auta, staèí prejs 5 kôl s
+najmenším poètom havárií. Kláves &lt;shift&gt; pohybuje do¾ava, &lt;V&gt; doprava.
+V cieli sa reštartuje shiftom. BTW, celá hra sa dá prejs bez jedinej havárie. Vieš, ako na to?<br>
+- 10, <b>TEHLY</b>, 1500. Princíp je takı istı ako v Arkanoide, t.j. odráa gulièku
+  pomocou vozíka. Ak gulièka odstráni a na tri kusy všetky tehly, ideš do
+  ïalšieho levelu. Rıchlejšieho. Ak sa ti minú "ivoty", reštart je &lt;K0&gt;.<br>
+  - 03, <b>FRED</b>, ????. V smere stále doprava treba prejs asi 20 miestností.
+  Ovládanie sa vypíše na zaèiatku po spustení. Ak poèas hry stlaèíš &lt;STOP&gt;,
+  dostaneš dve monosti: S - START vráti za do prvej miestnosti, C - CONTINUE
+  reštartuje aktuálnu miestnos.<br>
+- 04, <b>HORACE</b>, ????. Na poschodí musíš predupa podlahu a èaka, e do nej
+  padne nejakı pavúk. Keï tam u je, treba ís za ním a skáka mu po tej
+  sprostej hlave, a ho rozdupeš na ni. Ovládanie sa vypíše na zaèiatku po
+  spustení.<br>
+- 06, <b>MANIC</b>, ????. Najklasickejšia hra na PMD-85 vôbec. Ovládanie sa vypíše
+  hneï v úvode, cie¾ hry následne po dohratí úvodnej melódie. V kadej
+  miestnosti je nutné vyzbiera všetky predmety, pritom sa vyhıba príšerám a
+  nakoniec sa vo vıahu vyvies do ïalšej miestnosti.<br>
+- 07, <b>PAMPUCH</b>, ????. — úlohou je riadi pampúcha tak, aby poral všetky dostupné
+  bobky. Nesmie sa však dosta do kolízie s duchom. Ak vyerie celú miesnos,
+  je nasadenı do ïalšej. Neriešite¾nú situáciu treba rieši klávesom &lt;STOP&gt;.
+  Ovládanie je na zaèiatku, ibae do¾ava a doprava sa pohybuje rolovacími
+  klávesmi, teda |&lt;- a -&gt;|.<br>
+- 12, <b>ZABY</b>, 1500. Osem škaredıch iab èaká u len na to, e ich prevedieš na
+  druhı breh. Okrem svojich pôvabov ti dávajú pod prsty aj nasledujúce klávesy:
+  &lt;K9&gt; - aba vyskoèí na štartovú èiaru, &lt;K4&gt; - aba skoèí smerom k vytúenému
+  cie¾u, &lt;K10&gt; - ukáe sa ti Tabu¾ka najlepších vıkonov, &lt;K11&gt; - reštart hry.<br>
+
+<br>
+<b>Hry v programovacom jazyku BASIC G</b>, èie treba k nim interpreter tohto
+jazyka uloenı v ROM module. Po loadnutí interpretera do pamäti príkazom
+  "BASIC G" sa hry - programy nahrávajú príkazom "LOAD nn", nn je èíslo hry.
+  - iadna z basicovskıch hier na PMD-85 1 nie je tzv. samospúšacia, t.j. po
+  ukonèení nahrávania sa sama nespustí. Preto je potrebné napísa príkaz "RUN".
+- Pri kadej hre je uvedené jej èíslo, názov a krátky pokec.<br><br>
+<br>
+- <b>BLACK</b>. Poèítaè a ty staviate cestu tak, aby ste sa dostali do opaèného
+  rohu šachovnice. Kto príde prvı, vyhráva. Ovládanie je popísané priamo v hre.<br>
+ - 01, <b>BOMBARDER</b>. Si schopnı zrovna mesto so zemou? Uvidíme, ostatné sa dozvieš,
+  keï spustíš hru.<br>
+  - <b>FARAON</b>. V hrobke máš neporiadok. Ostatné sa dozvieš, keï spustíš hru.<br>
+  - <b>KON</b>. Skoro ako BLACK, ibae tu sa ahá  koòom. Pravidlá  pre ah koòom sú
+  ako v šachu.<br>
+- <b>TAVA</b>. Hra s náhodou a prírodou. Ako dlho vydríš vies avu púšou?
+  Ovládanie je ve¾mi jednoduché.<br>
+  - <b>TEST LOG</b>. Staèí odpoveda na asi 20 otázok a dozvieš sa, ako si na tom.<br>
+  - 11, <b>WURMI</b>. Klasika - treba ra kapustu, nie jed, ani seba a takisto stena
+  znamená problém.<br>
+
+<h2>Softvérové vybavenie ATmega128</h2>
+<p>Emulaènı softvér pre ATmega128 je napísanı v assembleri v kombinácií s preprocesorom - skriptovacím jazykom PHP. Na kompiláciu odporúèam ma nainštalované balíky <a href="http://winavr.sourceforge.net/">WINAVR</a>, AVRASSEMBLER a skriptovací jazyk <a href="http://www.php.net">PHP</a>. Prípadne rozdiely v inštalácií nastavte v súbore <b>code/Makefile</b>. Jednotlivé zdrojové súbory sú uloené po adresároch:  
+</p>
+<table border="1">
+	<tr><td rowspan="1"><b>adresár</b></td><td><b>súbor</b></td><td><b>popis</b></td></tr>
+	<tr><td rowspan="19"><b>code/</b></td><td>8080.asm</td><td>rozskoková tabu¾ka jednotlivıch 256 kódov inštrukcií procesora 8080.</td></tr>
+	<tr><td>basic1.rom</td><td>binárny obsah ROM modulu s BASIC-G</td></tr>
+	<tr><td>monit1.rom</td><td>binárny obsah ROM PMD 85/1 - firmware (MONITOR)</td></tr>
+
+	<tr><td>basic1.asm</td><td>obsah ROM modulu BASIC-G vo formáte ASM, vygenerovanı skriptom <b>games.php</b></td></tr>
+<tr><td>fuses_18.txt</td><td>textovı popis nastavení konfiguraènıch fuses</td></tr>
+<tr><td>Makefile</td><td>dávkovı súbor pre skompilovanie zdrojovıch kódov. 
+		Nastavuje sa v òom adresár <b>$(MGFDIR)</b>, z ktorého sa prikompilujú PMD-85/1 programy do vstavanej magnetofónovej pásky. 	
+		Príkazom <b>make&nbsp;all</b> skompilujete všetky zdrojové kódy a nahráte obsah pamätí FLASH a EEPROM do mikroprocesora. Príkazom <b>make&nbsp;pmd.hex</b> preloíte zdrojové kódy, príkazom <b>make&nbsp;eeprom</b> preloíte zdrojové kódy a nahráte obsah EEPROM pamäte a napokon <b>make&nbsp;flash</b> preloíte zdrojové kódy a nahráte ich do FLASH pamäte.
+</td></tr>
+
+<tr><td>macro.asm</td><td>definície priradenia jednotlivıch I/O pinov procesora, jednoduché makrá</td></tr>
+<tr><td>kbd.php</td><td>prerušovacia obsluná rutina príjmu znaku od USART0 od klávesnice PC-AT. Po príjme znaku sa v internej bitovej mape vo formáte 16x5 bitov zaznaèí informácia o stlaèení alebo pustení jednotlivého klávesu. Taktie je realizovaná OSD obrazovka po stlaèení ALT+S, reset PMDèka po stlaèení ALT+1 (ALT+ESC).</td></tr>
+<tr><td>kb_lookup.asm</td><td>Mapovacia tabu¾ka SCAN kódov klávesnice na ich pozíciu v matici kláves PMD-85</td></tr>
+
+<tr><td>monit1.asm</td><td>obsah ROM pamäte PMD-85/1 vo formáte ASM vygenerovanı skriptom <b>games.php</b>. Je uloenı do pamäte EEPROM</td></tr>
+<tr><td>video.php</td><td>generovanie TV obrazu, serializácia TV riadku, synchronizaènıch impulzov, zvuku. </td></tr>
+<tr><td>pmd.php</td><td>Hlavnı zdrojovı súbor, inicializácia, emulácia jednotlivıch inštrukcií procesora 8080. </td></tr>
+<tr><td>pmd.hex</td><td>obsah FLASH pamäte ATmega128, získanı kompiláciou</td></tr>
+<tr><td>pmd.eep</td><td>obsah EEPROM pamäte ATmega128, získanı kompiláciou</td></tr>
+<tr><td>pmd.asm</td><td>Zdrojovı assemblerovskı súbor získanı po prejdení pmd.php vykonaním PHP programu</td></tr>
+<tr><td>pmd.lst</td><td>vıpis - listing po preloení pmd.asm</td></tr>
+<tr><td>pmd.map</td><td>vıpis priradenia assemblerovskıch symbolov, získanı kompiláciou pmd.asm</td></tr>
+<tr><td>games.php</td><td>Skript na konverziu binárnych ROM modulov do assemblerovskej formy. Taktie je urèenı na zbalenie obsahu <b>romXY</b> adresárov, ich RLE kompresiu do jedného súboru</td></tr>
+<tr><td>games_rom.asm</td><td>obsah magnetofónovej pásky PMD-85/1 vo formáte ASM vygenerovanı skriptom <b>games.php</b>. Dáta su komprimované RLE metódou - opakujúce bajty sú nahradené znaèkou, hodnotou a poètom opakovaní. </td></tr>
+
+<tr><td rowspan="1"><b>docs/</b></td><td>index.html</td><td>Dokumentácia</td></tr>
+
+<tr><td rowspan="3"><b>schema/</b></td><td>schema128.sch</td><td>Schéma zapojenia emulátora PMD-85/1 vo formáte EAGLE 4.10</td></tr>
+<tr><td>schema128.brd</td><td>Obrazec dosky plošného spoja vo formáte EAGLE 4.10. Opä upozoròujem na nutnos jednej prepojky vo vedení signálu COMPOSITE_VIDEO</td></tr>
+<tr><td>plosak_top_mirrored.eps</td><td>Zrkadlovı obrazec dosky plošného spoja vo formáte EPS- postscript, vhodnı na tlaè na fóliu pri vırobe DPS fotocestou. Opä upozoròujem na nutnos jednej prepojky vo vedení signálu COMPOSITE_VIDEO</td></tr>
+
+<tr><td rowspan="1"><b>rom0/</b></td><td>
+
+		AUTO.PMD<br>
+BOMBARDE.02B<br>
+Boulder Dash.06$<br>
+FRED.04$<br>
+HORAC.25$<br>
+INVAZE.PMD<br>
+MANIC1.02$<br>
+PAMPUCH.18$<br>
+PENETRAT.05$<br>
+Tank.00$<br>
+Tehly.PMD<br>
+WURMI.07B<br>
+ZABY.PMD<br>
+
+</td><td>Obsah mgf pásky - hry a programy v strojovom kóde a v BASIC-u PMD-85/1. Kede je limitovanı obsah internej FLASH pamäte (na hry a PMDèkové programy zostáva cca 113 KB), nepodarilo sa ani po kompresií uloi viacej PMD-85/1 programov. Ak chcete zaspomína na iné hry, odporúèam pozrie èi sa nenachádza v inom adresári romXY/. Prepísa v <b>code/Makefile</b> premennú <b>$(MGFDIR)</b> na hodnotu rom1 alebo rom2. Alebo môete vytvori vlastnı romXY/ adresár s vlastnım obsahom.</td></tr>
+
+
+<tr><td rowspan="1"><b>rom1/</b></td><td>
+		BLUDISTE.23$<br>
+Ceres1.pmd<br>
+FLAPPY.24$<br>
+KANKAN.27$<br>
+KARE3D2.00$<br>
+MANIC23.03$<br>
+PUZZLE.02$
+
+		
+</td><td>Obsah mgf pásky - ïa¾šie hry a programy v strojovom kóde PMD-85/1.</td></tr>
+
+<tr><td rowspan="1"><b>rom2/</b></td><td>
+
+		HLIPA.21$<br>
+		HORAC.25$<br>
+PEXESO.PMD<br>
+SABOTER.28$<br>
+WILLY.15$<br>
+
+
+		
+</td><td>Obsah mgf pásky - ïa¾šie hry a programy v strojovom kóde PMD-85/1.</td></tr>
+
+
+</table>
+
+
+
+<h2>Emulátor procesora 8080</h2>
+<p>Vlastná emulácia procesora 8080 je peknım príkladom extrémného programovania za úèelom vymıkania maximálnej priepustnosti programu. Je to dosiahnuté rôznymi trikmi:
+<ul>
+	<li><b>Dekódovanie inštrukcií</b> - pouitie IJMP a RJMP inštrukcií (v rozsahu 8 KB kódu):
+	<pre>i_cycle:
+00053d bbc2	out		ADDRL,_PCL
+00053e bbd8	out		ADDRH,_PCH
+00053f 9621	adiw		_PCL,1			; wait a minute
+000540 e0fa	ldi		ZH, high(i_table)      
+000541 b3e3	in		ZL, DATAIN
+000542 9409	ijmp		
+....
+
+i_table:			
+000a00 cb3c	rjmp	_nop
+000a01 cd8f     rjmp	_lxi_b
+000a02 c144     rjmp	_stax_b
+000a03 cd72     rjmp	_inx_b
+
+....
+         
+_inx_b:
+000776 194b	sub	C, _255
+000777 088b	sbc	B, _255
+000778 cdc4	rjmp	i_cycle</pre>
+	</li>
+	<li><b>Èasto pouívané èíselné konštanty</b> - 0 a 255 sú uloené v registroch. Taktie všetky èasto pouívané premenné a stav procesora 8080 sú uloené v registroch.
+	</li>
+	<li><b>Rıchla ochrana oblastí ROM pred zápisom</b> - realizovaná vloením iba dvoch inštrukcií <b>SBRC</b> do zápisu bez ochrany oblasti pamäte 0x8000-0xBFFF. Porovnajte to prosím s tım èo vygeneruje podmienka if( $a &lt; 0x8000 || $a &gt;=0xC000 ){ ENABLE_WRITE(); } v jazyku C.<pre>_mov_ma:
+000574 bad5    	out	DATAOUT,A
+000575 9adf    	sbi	CONTROLRAM,MEMRD
+000576 bab4    	out	DATADIR,_255
+000577 bae2    	out	ADDRL,L    ; output 16 bit address 
+000578 baf8    	out	ADDRH,H
+000579 fcf7    	sbrc	H,7	    ; skip if address &lt; 0x8000
+00057a fcf6    	sbrc	H,6	    ; skip if 6th bit is clear
+00057b 98de	cbi	CONTROLRAM,MEMWR
+00057c 9ade	sbi	CONTROLRAM,MEMWR</pre>
+	</li>
+	<li><b>Naèítanie a zobrazenie 1 šestice pixelov</b> - spracovanie jasového atribútu vïaèí inštrukcií ASR. Spracovanie blikacieho atribútu je relizované cez prevodnú look-up tabu¾ku v internej RAM pamäti (ld video_tmp,X). Taktie rıchlostné pomery (6Mpx/s) sú priaznivejšie pri našom usporiadaní externej RAM pamäte s monosou prístupu po fázach (vyšle sa hornı bajt adresy, potom dolnı bajt adresy, potom sa preèíta vısledok èítania, inkrementácia adresy a popri všetkom tom serializácia bajtu videopamäte vrátane handlovania grafickıch atribútov)<pre>
+000054 b923    	out	VIDEOPORT,video_tmp		; 0.bit 
+000055 9525    	asr	video_tmp
+000056 ba92    	out	ADDRL,video_ptr_l		; output low address 
+         	
+000057 b923    	out	VIDEOPORT,video_tmp		; 1.bit 
+000058 9525    	asr	video_tmp
+         	
+000059 b923    	out	VIDEOPORT,video_tmp		; 2.bit 
+00005a 9525    	asr	video_tmp
+00005b 9493    	inc	video_ptr_l
+         	
+00005c b923    	out	VIDEOPORT,video_tmp		; 3.bit 
+00005d 9525    	asr	video_tmp
+00005e b3a3    	in	XL,DATAIN			; load next 6 pixels :X X 5 4 3 2 1 0
+         	
+00005f b923    	out	VIDEOPORT,video_tmp		; 4.bit 
+000060 9525    	asr	video_tmp
+         	
+000061 b923    	out	VIDEOPORT,video_tmp		; 5.bit 
+000062 912c    	ld	video_tmp,X</pre>         
+	</li>
+	<li><b>Exaktné èasovanie</b> - aby sa obraz na obrazovke nevlnil v závislosti od dåky trvania inštrukcie, po ktorej nasledovalo prerušenie od èasovaèa a zaèatie vykres¾ovanie TV riadku je zabudovaná automatická synchronizácia na 1,2 a 3 cyklové inštrukcie, ktorım sa pri programovaní ve¾mi nedá vyhnú. 
+	
+</ul>
+
+</p>
+<h2>Záver</h2>
+<p>Záverom mono u iba doda e konštrukcia dokazuje pokrok v technológiach v priebehu pribline 20-tich rokov (1985-2005) v kategórií tuctovıch mikroprocesrov - Intel 8080 a ATMEL MEGA128 a celkovú technickú úroveò dnešnej doby. 
+	<BR>
+	Tie konštrukcia niekdajšieho PMD-85/1 z produkcie TESLY Piešany je ve¾mi vïaèná v tom e sa vlastne zobral pôvodnı softvér, ktorı tvorilo a ladilo mnostvo šikovnıch ¾udí. Efekt je takmer dokonalı - klasické hry (FLAPPY, BOULDER DASH, MANIC MINER, TETRIS...) v kombinácií jednoduchej konštrukcie s novım procesorom...  Bez vıborného softvéru by vlastne vznikol len ïalší generátor testovacích televíznych obrazcov. Len moje laborovanie ako vtesna PMDèko do iného procesora je nieko¾koroèné úsilie a na vıvoj kadej zloitejšej hry bol ich autorom obetovanı èas rádovo tie roky, suma sumárom - keby zaènete vyvíja takéto zariadenie (malú hernú konzolku) od nuly, bude Vám to trva zrejme nieko¾ko desaroèí.      	
+	<br><br>
+	<b>Forever 8 bits, forever PMD-85 ...</b>
+	<br><br>
+	Ing. Peter Chrenko, &copy; 2006
+	<br><br>
+	<h2>Recenzent</h2>
+	<b>Juraj Bulisèák, 2006</b> - relizácia 2 ks emulátora PMD-85/1 pod¾a tejto konštrukcie. Vïaka za pripomienky pri nastavovaní fuses (poistiek)!.<br>
+
+</p>
 </BODY>
 
 

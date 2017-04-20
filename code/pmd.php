@@ -506,6 +506,7 @@ function _write($h, $l, $data, $output_address=true, $deactive=true, $active=tru
 	
 	echo   "\tout\tDATAOUT,$data\n";
 
+
 	if( $deactive ) 
 	{ 
 		echo "\tMEMRD_deactive\n";
@@ -2002,7 +2003,17 @@ basic1_start:
 		.include	"basic1.asm"
 
 games_start:
-		.include	"games_rom0.asm"
+<?php 
+   
+   $bad_flash_offset = 112; // compensation for BAD INTERNAL FLASH memory - set 0 for good ATmega device
+  
+   for($i=0;$i<$bad_flash_offset; $i++)
+   {
+      echo ".dw 0xffff\n";
+   }
+
+?>
+		.include	"games_rom.asm"
 games_end:
 		
 

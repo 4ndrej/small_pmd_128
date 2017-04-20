@@ -1,5 +1,5 @@
 
-AVRASM ver. 1.56  pmd.asm Mon Mar 28 16:01:18 2005
+AVRASM ver. 1.56  pmd.asm Sun Mar 12 15:40:37 2006
 
 
 EQU  ucsr1c       0000009d
@@ -764,7 +764,7 @@ EQU  visible_lines 00000100
 EQU  dark_lines   00000024
 EQU  vsync_lines  00000005
 CSEG interrupt_ocr1a 00000018
-CSEG interrupted_1cycle 00000020
+CSEG interrupted_1cycle 0000001f
 CSEG vertical_sync_begin 00000030
 CSEG vertical_sync_end 00000037
 CSEG no_visibility_change 00000046
@@ -1113,7 +1113,7 @@ CSEG mask_compute 00000c8a
 CSEG wr_kbd_pc    00000c96
 CSEG basic1_start 00000c9d
 CSEG games_start  00001e9d
-CSEG games_end    0000fc75
+CSEG games_end    0000f331
 DSEG stack_top    00000c00
 DSEG blink_lookup_table 00000c00
 DSEG parity_table 00000e00

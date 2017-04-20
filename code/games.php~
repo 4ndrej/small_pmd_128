@@ -5,7 +5,7 @@
 function rom_modul($output, $rom, $comment = "" )
 {
   echo 'A';
-  $per_line = 24; // this must be divided by two (organization FLASH is 64K x 16bits words)
+  $per_line = 40; // this must be divided by two (organization FLASH is 64K x 16bits words)
   $length = strlen($rom);
 
   fwrite($output, "\n; FILE: \"$comment\", size=".$length. "\n\n");
@@ -80,10 +80,11 @@ function last_char( $c ) // zabezpeci pakovanie rovnakych sekvencii > 254 znakov
 
   
   $games_dir = $_SERVER['argv'][1];
+  $oname = $_SERVER['argv'][2] ? $_SERVER['argv'][2] : "${games_dir}.asm";
   if( ! preg_match("/rom\\d+/",$games_dir))
   {
      $rom = file_get_contents("$games_dir.rom");
-     $output = fopen("${games_dir}.asm", "wt");
+     $output = fopen($oname, "wt");
      rom_modul($output, $rom, $games_dir);
      fclose($output);
 	
