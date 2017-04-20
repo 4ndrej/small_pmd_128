@@ -18,9 +18,8 @@ i celkovou dostupnosou v školstve.
 <br>
 Cie¾om tejto konštrukcie je umoni nadšencom postavi si vlastnı klon PMDèka. To znamená vytvorenie zariadenia z ktorého po pripojení televízora, klávesnice a napájacieho zdroja sa prenesiete do rokov 80-tych a zahráte si napríklad ob¾úbeného MANIC MINERa alebo skúsite nieèo naprogramova v starom programovacom jazyku BASIC-G.   
 <br><br>
-Toto všetko vrátane cca 113 KB pôvodnıch hier a programov sa podarilo postupnımi iteráciami napokon vtesnat iba do dvoch integrovanıch obvodov a to: ATmega128-16 a IO 64 KB pamäte RAM. Zobrazovanie obrazu na televízore (TV), generovanie zvuku, obsluha klávesnice ako aj vlastná emulácia chovania procesora Intel 8080, ktorı bol srdcom pôvodného PMD-85, je realizovaná èisto softvérovo. 
-
-
+Toto všetko vrátane cca 113 KB pôvodnıch hier a programov sa podarilo postupnımi iteráciami napokon vtesna iba do dvoch integrovanıch obvodov a to: ATmega128-16 a IO 64 KB pamäte RAM. Zobrazovanie obrazu na televízore (TV), generovanie zvuku, obsluha klávesnice ako aj vlastná emulácia chovania procesora Intel 8080, ktorı bol srdcom pôvodného PMD-85, je realizovaná èisto softvérovo. 
+<br><bR>
 
 Samozrejme vdy je rozdiel medzi kópiou a originálom a inak to nebude ani v našom prípade. Niektoré nepodstatné vlastnosti pôvodného PMDèka boli zanedbané alebo vynechané, nieèo bolo implementované zjednodušene. Z poh¾adu softvéru, pôvodnıch programov na PMDèku, sa dosiahla kompatibilita takmer 100%, beia všetky známe programy vrátane vıbornej hry HLÍPY od Karla Šuhajdu. Generovanie èiernobieleho TV obrazu vrátane atribútov blikanie a jas je ve¾mi vıborné, náhrada magnetofónu pamäou FLASH na èítanie taktie vıborná, nehovoriac o nieko¾konásobnom zrıchlení nahrávania programov. Pôvodná klávesnica PMDèka ako jediné vstavané vstupné zariadenie je nahradená lacnou externou PS/2 klávesnicou. Najväèšie momentálne nedostatky v konštrukcií resp. obslunom softvéri sú pri generovaní zvukového vıstupu. 
 
@@ -28,10 +27,10 @@ Samozrejme vdy je rozdiel medzi kópiou a originálom a inak to nebude ani v našo
 <br><br>
 
 
+<b>PMD-85</b> bol domáci 8-bitovı mikropoèítaè so vstavanou klávesnicou a vıstupom na klasickı TV príjimaè. Vıstup na TV bol èiernobiely ale bola monos pripoji externı farebnı monitor s rozhraním RGB. Ale aj tak boli grafické monosti PMDèka malé - rozlíšenie 288&divide;256 pixelov, prièom kadá 6-tica mala spoloènı 2 bitovı grafickı atribút. Na vtedajšiu dobu to bol vıbornı obraz, keïe ZX Spectrum malo ešte nišie rozlíšenie 256&divide;192 + grafické atribúty. PMDèko bolo skonštruované a vyrábané niekdajšou Teslou Piešany okolo roku 1982. Neskôr ho v rôznych obmenách zaèalo vyrába viacero domácich vırobcov a vznikli modely PMD-85/2, PMD-85/2A, PMD-85/3, Didaktik Alfa 1,2, Didaktik Beta, Mao, Zbrojováèek C2717 a iné. PMDèko malo vstavanú svojsku nespo¾ahlivú klávesnicu, zvukovı vıstup - speaker, zasúvate¾nı ROM modul s BASIC-G. Ako pamä na uchovávanie programov slúil klasickı magnetofón.<br>
+Èo sa tıka softvéru - bola to éra tvorby softvéru nadšencami, vzniklo a bolo preportovanıch ve¾a hier. Ve¾mi èinné bolo trio autorov VBG software - Vlastimil Veselı, Libor Bedrlík a Ladislav Gavar. Na PMD-85 teda existuje par  megabajtov hier - Manic Miner, Flappy, Boulder Dash, Fred, Penetrator, Saboter, Pampuch, Wurmi, Galaxia, Mikrotron, Willy atï. Niektoré z nich (dá sa konfigurova) sú vstavané v tomto klone PMDèka (ktorı interne volám kódom <b>small_pmd_128</b>, 128=ve¾kos FLASH pamäte v KB, small=rozmery PMDèka 3x4 cm).
+<br><br>
 
-
-
-  
 
 
 
