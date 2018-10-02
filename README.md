@@ -11,3 +11,4 @@ links:
 * http://oldcomputer.info/8bit/pmd85/index.htm
 * http://diyot.site11.com/pic/Hardware%20emulator%20Czechoslovak%20microcomputer/Hardware%20emulator%20Czechoslovak%20microcomputer%20(RETROARCADE%20simulator)/
 * https://games.tiscali.cz/tema/volne-chvile-s-pmd-85-jak-vznikaly-hry-pro-nejznamejsi-ceskoslovensky-osmibit-246389
+* https://herniarcheolog.blogspot.com/search/label/PMD-85
